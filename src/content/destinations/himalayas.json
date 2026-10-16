@@ -1,0 +1,12 @@
+{
+  "name": "Himalayas",
+  "region": "South Asia",
+  "country": "Nepal",
+  "coordinates": { "lat": 27.9881, "lng": 86.9250 },
+  "difficulty": "extreme",
+  "terrain": ["alpine", "glaciers", "high passes", "river valleys"],
+  "season": "March – May / Sept – Nov",
+  "highlights": ["Everest Base Camp", "Annapurna Circuit", "Upper Mustang", "Langtang Valley"],
+  "heroImage": "_assets/dest-himalayas.jpg",
+  "gallery": ["_assets/journey-himalaya.jpg"]
+}

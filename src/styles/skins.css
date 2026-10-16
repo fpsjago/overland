@@ -1,0 +1,175 @@
+/* OVERLAND — Color Skins
+   Three distinct palettes, each evoking a different expedition environment.
+   Applied via data-skin attribute on <html>.
+   ============================================================ */
+
+/* ============================================================
+   SKIN 1: "The Map" (default — parchment / forest / rust)
+   Inspired by aged topographic maps and Patagonia catalogs.
+   ============================================================ */
+[data-skin="map"],
+html:not([data-skin]) {
+  --bg:              #F5F1E8;
+  --surface:         #EDE6D5;
+  --surface-hover:   #E5DEC9;
+  --primary:         #1F2E1A;
+  --primary-hover:   #2D4225;
+  --primary-rgb:     31, 46, 26;
+  --accent:          #B84C2B;
+  --accent-hover:    #8E3A1C;
+  --accent-rgb:      184, 76, 43;
+  --on-accent:       #F5F1E8;
+  --accent-ink:      #9E3F22;
+  --accent-on-dark:  #E5946E;
+  --panel:           #1F2E1A;
+  --text:            #1F2E1A;
+  --text-muted:      #6B6255;
+  --border:          rgba(31, 46, 26, 0.12);
+  --muted-bg:        #EAE3D0;
+
+  /* Grain blend mode for warm parchment */
+  --grain-blend:     multiply;
+  --grain-opacity:   0.04;
+
+  /* Map grid color */
+  --grid-color:      rgba(31, 46, 26, 0.03);
+}
+
+/* ============================================================
+   SKIN 2: "Night Camp" — dark forest / ember orange
+   Campfire light against a starless sky. Aggressive dark mode.
+   ============================================================ */
+[data-skin="night"] {
+  --bg:              #0F1A0B;
+  --surface:         #172311;
+  --surface-hover:   #1F2F18;
+  --primary:         #E8DFC8;
+  --primary-hover:   #F0E9D6;
+  --primary-rgb:     232, 223, 200;
+  --accent:          #E06B2A;
+  --accent-hover:    #F07A38;
+  --accent-rgb:      224, 107, 42;
+  --on-accent:       #0F1A0B;   /* ember is bright: dark text on it, 5.4:1 */
+  --accent-ink:      #E06B2A;   /* 4.9:1 on surface */
+  --accent-on-dark:  #EE8A4E;
+  --panel:           #182613;   /* a lifted dark band, never cream */
+  --text:            #E8DFC8;
+  --text-muted:      #9A8F7E;   /* lifted from #8B8070: 5.1:1 on surface */
+  --error:           #F08A7A;   /* the default #A32B1A is unreadable on dark */
+  --border:          rgba(232, 223, 200, 0.10);
+  --muted-bg:        #132010;
+
+  /* Shadows darker against dark bg */
+  --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md:  0 4px 8px -1px rgba(0, 0, 0, 0.40), 0 2px 4px -2px rgba(0, 0, 0, 0.25);
+  --shadow-lg:  0 12px 24px -4px rgba(0, 0, 0, 0.50), 0 4px 8px -4px rgba(0, 0, 0, 0.30);
+  --shadow-xl:  0 24px 48px -8px rgba(0, 0, 0, 0.60), 0 8px 16px -8px rgba(0, 0, 0, 0.40);
+  --shadow-glow: 0 0 40px rgba(224, 107, 42, 0.25);
+
+  /* Grain lighter for dark bg */
+  --grain-blend:   screen;
+  --grain-opacity: 0.05;
+
+  /* Map grid lighter for dark bg */
+  --grid-color:    rgba(232, 223, 200, 0.04);
+}
+
+/* Night camp: selection */
+[data-skin="night"] ::selection {
+  background-color: #E06B2A;
+  color: #0F1A0B;
+}
+
+/* Night camp: buttons */
+[data-skin="night"] .btn-primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #0F1A0B;
+}
+[data-skin="night"] .btn-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* Night camp: the difficulty word sits on a dark sidebar */
+[data-skin="night"] .badge-ink.difficulty-moderate    { --diff: #8FBF73; }
+[data-skin="night"] .badge-ink.difficulty-challenging { --diff: #EE8A4E; }
+[data-skin="night"] .badge-ink.difficulty-extreme     { --diff: #F08A7A; }
+
+/* Night camp: card hover */
+[data-skin="night"] .card-terrain {
+  background-color: var(--surface);
+  border-color: var(--border);
+}
+
+/* Night camp: glass */
+[data-skin="night"] .glass {
+  background: rgba(23, 35, 17, 0.75);
+  border-color: rgba(232, 223, 200, 0.08);
+}
+[data-skin="night"] .grain::after {
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+
+/* ============================================================
+   SKIN 3: "Arctic" — glacier white / midnight navy / ice blue
+   The cold precision of polar expeditions. Clean, severe.
+   ============================================================ */
+[data-skin="arctic"] {
+  --bg:              #F8FAFB;
+  --surface:         #EEF2F5;
+  --surface-hover:   #E4EBF0;
+  --primary:         #1C2B3A;
+  --primary-hover:   #253647;
+  --primary-rgb:     28, 43, 58;
+  /* Fill deepened from #2E8BB8 so light button text clears AA (5.0:1). */
+  --accent:          #1F6E94;
+  --accent-hover:    #185A7A;
+  --accent-rgb:      31, 110, 148;
+  --on-accent:       #F8FAFB;
+  --accent-ink:      #1D6A8F;
+  --accent-on-dark:  #7FC0E0;
+  --panel:           #1C2B3A;
+  --text:            #1C2B3A;
+  --text-muted:      #5A7080;
+  --border:          rgba(28, 43, 58, 0.10);
+  --muted-bg:        #E8EEF3;
+
+  /* Shadows cool-toned */
+  --shadow-sm:  0 1px 2px rgba(28, 43, 58, 0.05);
+  --shadow-md:  0 4px 8px -1px rgba(28, 43, 58, 0.08), 0 2px 4px -2px rgba(28, 43, 58, 0.05);
+  --shadow-lg:  0 12px 24px -4px rgba(28, 43, 58, 0.10), 0 4px 8px -4px rgba(28, 43, 58, 0.06);
+  --shadow-xl:  0 24px 48px -8px rgba(28, 43, 58, 0.14), 0 8px 16px -8px rgba(28, 43, 58, 0.08);
+  --shadow-glow: 0 0 40px rgba(46, 139, 184, 0.20);
+
+  /* Arctic grain */
+  --grain-blend:   multiply;
+  --grain-opacity: 0.025;
+
+  /* Map grid cool */
+  --grid-color:    rgba(28, 43, 58, 0.035);
+}
+
+/* Arctic: selection */
+[data-skin="arctic"] ::selection {
+  background-color: #1F6E94;
+  color: #F8FAFB;
+}
+
+/* Arctic: buttons */
+[data-skin="arctic"] .btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg);
+}
+[data-skin="arctic"] .btn-primary:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Arctic: glass */
+[data-skin="arctic"] .glass {
+  background: rgba(248, 250, 251, 0.70);
+  border-color: rgba(28, 43, 58, 0.08);
+}

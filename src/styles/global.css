@@ -1,0 +1,1089 @@
+/* OVERLAND — Global Stylesheet */
+/* Tailwind v4: import via @import, no @tailwind directives */
+
+@import "tailwindcss";
+
+/* ============================================================
+   FONTS — self-hosted, latin subset, STATIC weights.
+   Served from the site's own origin so first paint never waits on a
+   third-party stylesheet. Each face is a single frozen weight cut from
+   the variable font (13–23 KB each instead of 35–41 KB), and only the
+   weights the template uses ship:
+     Archivo 400 · 600 · 700 · 900, Archivo 900 italic
+     Lora 400 · 700, Lora 400 italic
+   BaseLayout preloads Archivo 900 italic: it draws the hero wordmark,
+   the largest text on the first screen.
+   Need other weights? Swap back to the variable files in
+   src/assets/fonts/variable/ (see CUSTOMIZATION.md, "Typography").
+   To add a language, add that subset's woff2 with its unicode-range.
+   ============================================================ */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/archivo-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/archivo-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/archivo-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../assets/fonts/archivo-900-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../assets/fonts/archivo-900-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Metric-matched fallback for Archivo, used while the web font loads.
+   Measured on the wordmark: Arial Black italic at 97.5% is ~1.5% WIDER
+   than Archivo 900 italic, and Arial 700 is within 1% of Archivo 700.
+   Being slightly wider on purpose means the swap to Archivo never grows a
+   heading's box: no layout shift, and no second, later LCP entry. */
+@font-face {
+  font-family: 'Archivo Fallback';
+  font-weight: 800 900;
+  src: local('Arial Black'), local('ArialMT-Black'), local('Arial-Black');
+  size-adjust: 97.5%;
+}
+@font-face {
+  font-family: 'Archivo Fallback';
+  font-weight: 100 700;
+  src: local('Arial'), local('ArialMT');
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/lora-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/lora-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/lora-400-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ============================================================
+   TAILWIND v4 THEME EXTENSIONS
+   Registers custom font-family utilities: .font-heading, .font-body
+   ============================================================ */
+@theme {
+  --font-heading: 'Archivo', 'Archivo Fallback', system-ui, sans-serif;
+  --font-body: 'Lora', Georgia, serif;
+  --font-mono: 'Courier New', 'Courier', monospace;
+}
+
+/* ============================================================
+   TAILWIND v4 COLOR TOKENS
+   `@theme inline` keeps the var() reference intact, so every skin
+   in skins.css keeps re-theming these utilities at runtime.
+   Names are deliberately NOT `text`/`bg` — a `--color-text` token
+   would make Tailwind claim the class name `bg-text`.
+   Utilities produced: bg-canvas, bg-surface, bg-primary, bg-accent,
+   bg-panel, text-ink, text-muted, text-accent-ink, border-hairline, ...
+
+   Two roles that look alike but must stay separate:
+   - `accent` is the FILL colour (buttons, rules, badges, cursor).
+   - `accent-ink` is the accent used as TEXT. It is tuned per skin to
+     clear WCAG AA (4.5:1) on both the page ground and the surface band,
+     and every dark panel swaps it for `--accent-on-dark` (see `.bg-panel`).
+   - `primary` is the brand ink (headings, inverse buttons). In Night Camp
+     it turns light. `panel` is the dark band (page headers, footer,
+     destinations rail) and stays dark in every skin.
+   ============================================================ */
+@theme inline {
+  --color-canvas:    var(--bg);
+  --color-surface:   var(--surface);
+  --color-primary:   var(--primary);
+  --color-accent:    var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-on-accent: var(--on-accent);
+  --color-panel:     var(--panel);
+  --color-ink:       var(--text);
+  --color-muted:     var(--text-muted);
+  --color-hairline:  var(--border);
+}
+
+/* Fixed light-on-dark tones (do not shift per skin — they sit on the
+   forest/primary panels). Opacity variants via `text-cream/60` etc. */
+@theme {
+  --color-cream:     #E8DFC8;
+  --color-parchment: #F5F1E8;
+}
+
+/* ============================================================
+   CASCADE LAYERS
+   NOTE: Do NOT declare @layer ordering here — Tailwind v4 establishes
+   layers (theme, base, components, utilities) via @import "tailwindcss".
+   Adding @layer reset after that import places reset AFTER utilities in
+   the cascade, causing the reset's margin:0/padding:0 to override all
+   Tailwind spacing utilities. Instead, custom reset rules go in @layer base.
+   ============================================================ */
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES — "The Map" skin (default)
+   ============================================================ */
+:root,
+[data-skin="map"] {
+  /* --- COLORS (The Map — Parchment/Forest/Rust) --- */
+  --bg:              #F5F1E8;
+  --surface:         #EDE6D5;
+  --surface-hover:   #E5DEC9;
+  --primary:         #1F2E1A;
+  --primary-hover:   #2D4225;
+  --primary-rgb:     31, 46, 26;
+  --accent:          #B84C2B;
+  --accent-hover:    #8E3A1C;   /* deepens on hover: 6.7:1 under --on-accent */
+  --accent-rgb:      184, 76, 43;
+  --on-accent:       #F5F1E8;   /* text on accent fills: 4.5:1 */
+  --accent-ink:      #9E3F22;   /* accent as text: 5.3:1 on surface */
+  --accent-on-dark:  #E5946E;   /* accent as text on panels: 6.0:1 */
+  --panel:           #1F2E1A;   /* dark band: headers, footer, rail */
+  --text:            #1F2E1A;
+  --text-muted:      #6B6255;
+  --border:          rgba(31, 46, 26, 0.12);
+  --muted-bg:        #EAE3D0;
+
+  /* Semantic */
+  --success:         #3D6B2E;
+  --warning:         #C4831A;
+  --error:           #A32B1A;
+  --info:            #2B5A7A;
+
+  /* --- TYPOGRAPHY --- */
+  --font-heading:    'Archivo', 'Archivo Fallback', system-ui, sans-serif;
+  --font-body:       'Lora', Georgia, serif;
+  --font-mono:       'Courier New', 'Courier', monospace;
+
+  /* --- FLUID TYPE SCALE --- */
+  --text-xs:    clamp(0.7rem,  0.65rem + 0.25vw, 0.75rem);
+  --text-sm:    clamp(0.8rem,  0.75rem + 0.25vw, 0.875rem);
+  --text-base:  clamp(0.9rem,  0.85rem + 0.25vw, 1rem);
+  --text-lg:    clamp(1rem,    0.95rem + 0.25vw, 1.125rem);
+  --text-xl:    clamp(1.15rem, 1.05rem + 0.5vw,  1.25rem);
+  --text-2xl:   clamp(1.3rem,  1.15rem + 0.75vw, 1.5rem);
+  --text-3xl:   clamp(1.6rem,  1.35rem + 1.25vw, 1.875rem);
+  --text-4xl:   clamp(2rem,    1.6rem  + 2vw,    2.25rem);
+  --text-5xl:   clamp(2.5rem,  1.9rem  + 3vw,    3rem);
+  --text-6xl:   clamp(3rem,    2.2rem  + 4vw,    3.75rem);
+  --text-7xl:   clamp(3.5rem,  2.5rem  + 5vw,    4.5rem);
+  --text-8xl:   clamp(5rem,    3.5rem  + 7.5vw,  8rem);
+  --text-9xl:   clamp(7rem,    4.5rem  + 12vw,   11.25rem);
+
+  /* --- SPACING (8px base grid) --- */
+  --space-1:   0.25rem;
+  --space-2:   0.5rem;
+  --space-3:   0.75rem;
+  --space-4:   1rem;
+  --space-5:   1.25rem;
+  --space-6:   1.5rem;
+  --space-8:   2rem;
+  --space-10:  2.5rem;
+  --space-12:  3rem;
+  --space-16:  4rem;
+  --space-20:  5rem;
+  --space-24:  6rem;
+  --space-32:  8rem;
+  --space-40:  10rem;
+  --space-48:  12rem;
+
+  /* --- BORDER RADIUS --- */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-2xl:  32px;
+  --radius-full: 9999px;
+
+  /* --- SHADOWS (warm, directional) --- */
+  --shadow-sm:  0 1px 2px rgba(31, 46, 26, 0.06);
+  --shadow-md:  0 4px 8px -1px rgba(31, 46, 26, 0.10), 0 2px 4px -2px rgba(31, 46, 26, 0.06);
+  --shadow-lg:  0 12px 24px -4px rgba(31, 46, 26, 0.12), 0 4px 8px -4px rgba(31, 46, 26, 0.08);
+  --shadow-xl:  0 24px 48px -8px rgba(31, 46, 26, 0.16), 0 8px 16px -8px rgba(31, 46, 26, 0.10);
+  --shadow-glow: 0 0 40px rgba(var(--accent-rgb), 0.18);
+
+  /* --- EASING CURVES --- */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-snappy: cubic-bezier(0.5, 0, 0.1, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* --- Z-INDEX SCALE --- */
+  --z-below:    -1;
+  --z-base:     0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-toast:    500;
+  --z-cursor:   9999;
+}
+
+/* ============================================================
+   RESET (merged into @layer base so utilities can override it)
+   ============================================================ */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  img, video, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  ul, ol {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font: inherit;
+  }
+
+  input, textarea, select {
+    font: inherit;
+  }
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--text);
+  }
+
+  h1 { font-size: var(--text-7xl); }
+  h2 { font-size: var(--text-5xl); }
+  h3 { font-size: var(--text-3xl); }
+  h4 { font-size: var(--text-2xl); }
+  h5 { font-size: var(--text-xl); }
+  h6 { font-size: var(--text-lg); }
+
+  p {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  strong { font-weight: 700; color: var(--text); }
+  em { font-style: italic; }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--on-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 3px;
+  }
+}
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+@layer components {
+
+  /* --- Skip link (accessibility) --- */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: var(--space-4);
+    z-index: var(--z-cursor);
+    padding: var(--space-2) var(--space-4);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: var(--radius-md);
+    transition: top 0.2s var(--ease-out);
+  }
+  .skip-link:focus {
+    top: var(--space-4);
+  }
+
+  /* --- Grain overlay (fractal noise, SVG data URI) --- */
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: var(--z-cursor);
+  }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
+  /* --- Crosshatch map grid --- */
+  .mapGrid {
+    background-image:
+      linear-gradient(rgba(31, 46, 26, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(31, 46, 26, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* --- Overland display type (180px Archivo Black italic) --- */
+  .wordmark {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(4rem, 10vw + 1rem, 11.25rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--text);
+  }
+
+  /* GPS coordinates display */
+  .coords {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* --- Container --- */
+  .container {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+  @media (min-width: 768px) {
+    .container { padding-inline: var(--space-10); }
+  }
+  @media (min-width: 1440px) {
+    .container { padding-inline: var(--space-16); }
+  }
+
+  /* --- Nav base --- */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+    padding: var(--space-5) 0;
+    transition: background-color 0.4s var(--ease-out),
+                backdrop-filter 0.4s var(--ease-out),
+                border-color 0.4s var(--ease-out),
+                padding 0.4s var(--ease-out);
+    border-bottom: 1px solid transparent;
+  }
+  /* Nav link underline: draws in from the left on hover/focus and stays
+     drawn for the current page. */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2px;
+    height: 1.5px;
+    background: var(--accent-ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out);
+  }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after,
+  .nav-link[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  /* --- Buttons --- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-8);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out),
+      color 0.25s var(--ease-out), transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+    cursor: pointer;
+  }
+  .btn-primary {
+    background-color: var(--primary);
+    color: var(--bg);
+    border: 2px solid var(--primary);
+  }
+  .btn-primary:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--text);
+    border: 2px solid var(--border);
+  }
+  .btn-ghost:hover {
+    border-color: var(--primary);
+    background-color: var(--surface);
+    transform: translateY(-2px);
+  }
+
+  /* --- Premium card hover --- */
+  .card-terrain {
+    position: relative;
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+    overflow: hidden;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .card-terrain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.04) 0%, rgba(var(--primary-rgb), 0.04) 100%);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out);
+  }
+  .card-terrain:hover::before { opacity: 1; }
+  .card-terrain:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* --- Section rule (editorial HR) --- */
+  .rule {
+    width: 100%;
+    height: 1px;
+    background-color: var(--border);
+  }
+  .rule-accent {
+    width: 48px;
+    height: 3px;
+    background-color: var(--accent);
+    border-radius: 2px;
+  }
+
+  /* --- Tag / badge --- */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-3);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-xs);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    background-color: var(--surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+  }
+  .tag-accent {
+    background-color: var(--accent);
+    color: var(--on-accent);
+    border-color: var(--accent);
+  }
+
+  /* --- Dark panels ---
+     Anything sitting on a dark band (page headers, footer, the destinations
+     rail, photo plates under a dark scrim) swaps accent TEXT for the light
+     variant, so `text-accent-ink` and the focus ring stay AA in every skin. */
+  .bg-panel,
+  .on-dark {
+    --accent-ink: var(--accent-on-dark);
+  }
+
+  /* --- Difficulty ---
+     One class per level sets `--diff`; `.badge-difficulty` uses it as a
+     fill under parchment text, `.badge-ink` as a text colour on the light
+     sidebar. Every pair clears 4.5:1. */
+  .difficulty-moderate    { --diff: #476F35; }
+  .difficulty-challenging { --diff: #A0421F; }
+  .difficulty-extreme     { --diff: #8B1A1A; }
+
+  /* --- Glass surface --- */
+  .glass {
+    background: rgba(245, 241, 232, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(31, 46, 26, 0.12);
+    border-radius: var(--radius-lg);
+  }
+  @supports not (backdrop-filter: blur(20px)) {
+    .glass { background: rgba(245, 241, 232, 0.95); }
+  }
+
+  /* --- FAQ accordion ---
+     The open/closed height is measured at runtime (scrollHeight), so the
+     script sets max-height imperatively; the closed state and the easing
+     belong here. */
+  .accordion-body {
+    max-height: 0;
+    transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .accordion-icon {
+    color: var(--accent);
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: transform 0.3s ease;
+  }
+
+  /* --- Skin switcher chip (demo tool) --- */
+  .skin-chip {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease-out), background-color 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out);
+  }
+  .skin-chip:hover {
+    border-color: var(--accent-ink);
+    background-color: var(--surface-hover);
+  }
+  .skin-chip[aria-pressed='true'] {
+    border-color: var(--text);
+  }
+  .skin-chip[aria-pressed='true']::after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-ink);
+  }
+
+  /* Options fold out above the toggle. Hidden with visibility (not
+     display) so the open/close can transition. */
+  .skin-options {
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out), visibility 0s linear 0.2s;
+  }
+  .skin-options.is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out), visibility 0s;
+  }
+
+  /* Swatch: the current skin's ground + accent, split diagonally. */
+  .skin-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--bg) 0 50%, var(--accent) 50% 100%);
+  }
+  .skin-swatch--map    { background: linear-gradient(135deg, #F5F1E8 0 50%, #B84C2B 50% 100%); }
+  .skin-swatch--night  { background: linear-gradient(135deg, #0F1A0B 0 50%, #E06B2A 50% 100%); }
+  .skin-swatch--arctic { background: linear-gradient(135deg, #F8FAFB 0 50%, #1F6E94 50% 100%); }
+
+  /* --- Trail card: photo cards (rail, destinations, journeys) ---
+     Hover and keyboard focus get the same treatment: the photo pushes in,
+     an accent rule draws under the title, and a "View route" cue slides
+     in. On touch screens (no hover) the cue is simply always shown. */
+  .trail-card__img {
+    transform: scale(1.04);
+    transition: transform 0.9s var(--ease-out);
+  }
+  .trail-card:hover .trail-card__img,
+  .trail-card:focus-visible .trail-card__img {
+    transform: scale(1.1);
+  }
+  .trail-card__title {
+    background-image: linear-gradient(var(--accent-on-dark), var(--accent-on-dark));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 2px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    transition: background-size 0.5s var(--ease-out);
+  }
+  .trail-card:hover .trail-card__title,
+  .trail-card:focus-visible .trail-card__title {
+    background-size: 100% 2px;
+  }
+  .trail-card__cue {
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+  }
+  .trail-card:hover .trail-card__cue,
+  .trail-card:focus-visible .trail-card__cue {
+    opacity: 1;
+    transform: none;
+  }
+  @media (hover: none) {
+    .trail-card__cue { opacity: 1; transform: none; }
+  }
+  /* The card owns a large box, so its ring sits inside (never clipped by
+     the rail's overflow) and in cream, which reads on the dark photo.
+     It is drawn on ::after, the last and highest layer: a plain inset
+     outline painted UNDER the card's absolutely positioned photo and
+     scrim, so the computed outline was there but nothing was visible. */
+  .trail-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 0 transparent;
+    transition: box-shadow 0.2s var(--ease-out);
+  }
+  .trail-card:focus-visible {
+    outline: none;
+  }
+  .trail-card:focus-visible::after {
+    box-shadow: inset 0 0 0 3px #E8DFC8, inset 0 0 0 5px rgba(15, 26, 11, 0.55);
+  }
+
+  /* Native swipe rail (touch, narrow, reduced motion): thin scrollbar. */
+  .rail-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(232, 223, 200, 0.35) transparent;
+  }
+
+  /* --- Difficulty badge (card) and difficulty word (detail sidebar) --- */
+  .badge-difficulty {
+    background-color: var(--diff, #476F35);
+    color: #F5F1E8;
+  }
+  .badge-ink {
+    color: var(--diff, #476F35);
+  }
+
+  /* --- Hero entrance (CSS only, plays at first paint) ---
+     The wordmark is the LCP element: it is never hidden, it only settles
+     from a small offset. Supporting lines rise in after it. The compass in
+     the GPS readout swings and settles on north. All of it is switched off
+     under prefers-reduced-motion (bottom of this file). */
+  .hero-wordmark {
+    animation: heroSettle 1.1s var(--ease-out) both;
+  }
+  .hero-rise {
+    animation: heroRise 0.8s var(--ease-out) both;
+    animation-delay: var(--rise-delay, 0ms);
+  }
+  .hero-compass {
+    animation: compassSettle 1.6s var(--ease-out) 0.15s both;
+  }
+
+  /* --- Primary CTA on photography --- */
+  .btn-cta {
+    transition: background-color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  }
+  .btn-cta:hover {
+    background-color: var(--accent-hover);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  }
+  .btn-cta:focus-visible {
+    outline-color: #E8DFC8;
+  }
+
+  /* --- Form controls ---
+     The 1px border uses --text-muted, which clears the 3:1 non-text
+     contrast WCAG requires for a control's boundary in every skin (the old
+     hairline was ~1.4:1). Focus draws the accent; invalid draws --error. */
+  .field {
+    background-color: transparent;
+    border: 1px solid var(--text-muted);
+    border-radius: 0;
+    transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  }
+  .field:hover {
+    border-color: var(--text);
+  }
+  .field:focus-visible {
+    outline: none;
+    border-color: var(--accent-ink);
+    box-shadow: 0 0 0 1px var(--accent-ink);
+  }
+  .field[aria-invalid='true'] {
+    border-color: var(--error);
+    box-shadow: 0 0 0 1px var(--error);
+  }
+  .field option {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+  .field-error {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--error);
+  }
+  .form-status {
+    min-height: 1.5em;
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+  .form-status[data-state='success'] { color: var(--text); }
+  .form-status[data-state='error'] { color: var(--error); }
+  .form-submit {
+    transition: background-color 0.25s var(--ease-out);
+  }
+  .form-submit:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+  }
+  .form-submit:disabled {
+    cursor: default;
+    opacity: 0.85;
+  }
+
+  /* --- Partners marquee (CSS only) ---
+     Two identical runs; the track slides by exactly one run (-50%). The
+     edges fade with a mask, so no overlay colour has to match the band. */
+  .marquee {
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    animation: marquee 48s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* --- Full-bleed image wrapper --- */
+  .img-fill {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+@layer components {
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s var(--ease-out);
+    /* Hidden until the first mousemove places it (otherwise it sits at the
+       top-left corner) and again when the pointer leaves the window. */
+    visibility: hidden;
+  }
+  .cursor-dot.is-visible,
+  .cursor-ring.is-visible {
+    visibility: visible;
+  }
+
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    margin: 0;
+  }
+
+  .cursor-ring {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid var(--text);
+    background: transparent;
+    opacity: 0.5;
+    transition:
+      width 0.3s var(--ease-out),
+      height 0.3s var(--ease-out),
+      opacity 0.3s var(--ease-out),
+      border-color 0.3s var(--ease-out);
+  }
+
+  .cursor-ring--expanded {
+    width: 56px;
+    height: 56px;
+    opacity: 0.3;
+  }
+
+  .cursor-ring--photo {
+    border-color: var(--accent);
+    opacity: 0.5;
+  }
+
+  .cursor-ring--cta {
+    background: rgba(var(--accent-rgb), 0.08);
+    border-color: var(--accent);
+  }
+
+  /* Hide the native cursor only once the custom one is running (Cursor.tsx
+     sets .has-cursor on <html>). Before hydration, on touch and under
+     reduced motion the native cursor stays. */
+  html.has-cursor body,
+  html.has-cursor a,
+  html.has-cursor button,
+  html.has-cursor [data-cursor] {
+    cursor: none;
+  }
+
+  /* Hide custom cursor on touch devices */
+  @media (pointer: coarse) {
+    .cursor-dot, .cursor-ring { display: none; }
+  }
+}
+
+/* ============================================================
+   SCROLL REVEAL SYSTEM
+   [data-reveal] — single element fade + slide
+   [data-reveal-stagger] — sequential stagger for children
+   ============================================================ */
+@layer utilities {
+
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.6s var(--ease-out),
+      transform 0.8s var(--ease-out);
+  }
+  [data-reveal].visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  [data-reveal="fade"] {
+    opacity: 0;
+    transform: translateY(0);
+    transition: opacity 0.7s var(--ease-out);
+  }
+  [data-reveal="fade"].visible { opacity: 1; }
+
+  [data-reveal="slide-left"] {
+    opacity: 0;
+    transform: translateX(-28px);
+    transition:
+      opacity 0.6s var(--ease-out),
+      transform 0.8s var(--ease-out);
+  }
+  [data-reveal="slide-left"].visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  [data-reveal="slide-right"] {
+    opacity: 0;
+    transform: translateX(28px);
+    transition:
+      opacity 0.6s var(--ease-out),
+      transform 0.8s var(--ease-out);
+  }
+  [data-reveal="slide-right"].visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  [data-reveal="scale"] {
+    opacity: 0;
+    transform: scale(0.94);
+    transition:
+      opacity 0.6s var(--ease-out),
+      transform 0.8s var(--ease-out);
+  }
+  [data-reveal="scale"].visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Stagger group — all children animate sequentially */
+  [data-reveal-stagger] > * {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.55s var(--ease-out),
+      transform 0.55s var(--ease-out);
+  }
+  [data-reveal-stagger].visible > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  [data-reveal-stagger].visible > *:nth-child(1)  { transition-delay:   0ms; }
+  [data-reveal-stagger].visible > *:nth-child(2)  { transition-delay:  80ms; }
+  [data-reveal-stagger].visible > *:nth-child(3)  { transition-delay: 160ms; }
+  [data-reveal-stagger].visible > *:nth-child(4)  { transition-delay: 240ms; }
+  [data-reveal-stagger].visible > *:nth-child(5)  { transition-delay: 320ms; }
+  [data-reveal-stagger].visible > *:nth-child(6)  { transition-delay: 400ms; }
+  [data-reveal-stagger].visible > *:nth-child(7)  { transition-delay: 480ms; }
+  [data-reveal-stagger].visible > *:nth-child(8)  { transition-delay: 560ms; }
+
+  /* Visually hidden (accessibility) */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Aspect ratios */
+  .aspect-panoramic { aspect-ratio: 4 / 1; }
+  .aspect-wide      { aspect-ratio: 16 / 9; }
+  .aspect-cinema    { aspect-ratio: 21 / 9; }
+  .aspect-photo     { aspect-ratio: 3 / 2; }
+  .aspect-portrait  { aspect-ratio: 4 / 5; }
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION — Accessibility override
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal],
+  [data-reveal="fade"],
+  [data-reveal="slide-left"],
+  [data-reveal="slide-right"],
+  [data-reveal="scale"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition-delay: 0ms !important;
+  }
+
+  /* Cards hold still; the cue stays visible so the affordance remains. */
+  .trail-card__img,
+  .trail-card:hover .trail-card__img,
+  .trail-card:focus-visible .trail-card__img {
+    transform: none !important;
+  }
+  .trail-card__cue {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Hero shows complete and still: no intro, no compass swing. */
+  .hero-wordmark,
+  .hero-rise,
+  .hero-compass {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Marquee holds still; the band stays readable. */
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes heroSettle {
+  from { transform: translateY(0.12em) skewX(-4deg); }
+  to   { transform: none; }
+}
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes compassSettle {
+  0%   { transform: rotate(-200deg); }
+  60%  { transform: rotate(18deg); }
+  80%  { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}

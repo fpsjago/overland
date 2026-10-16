@@ -1,0 +1,12 @@
+{
+  "name": "Amazon Basin",
+  "region": "South America",
+  "country": "Brazil / Peru",
+  "coordinates": { "lat": -3.4653, "lng": -62.2159 },
+  "difficulty": "challenging",
+  "terrain": ["rainforest", "river", "floodplain", "cloud forest"],
+  "season": "June – November",
+  "highlights": ["Rio Negro navigation", "Mamirauá Reserve", "Iquitos river routes", "Pink river dolphin"],
+  "heroImage": "_assets/dest-amazon.jpg",
+  "gallery": ["_assets/journey-jungle.jpg"]
+}

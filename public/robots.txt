@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fpsjago.github.io/overland/sitemap-index.xml

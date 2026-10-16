@@ -1,0 +1,12 @@
+{
+  "name": "Patagonia",
+  "region": "South America",
+  "country": "Chile / Argentina",
+  "coordinates": { "lat": -51.7267, "lng": -72.9651 },
+  "difficulty": "challenging",
+  "terrain": ["glaciers", "steppe", "granite peaks", "fjords"],
+  "season": "November – March",
+  "highlights": ["Torres del Paine W Trek", "Perito Moreno Glacier", "Los Glaciares NP", "Carretera Austral"],
+  "heroImage": "_assets/dest-patagonia.jpg",
+  "gallery": ["_assets/journey-patagonia.jpg"]
+}

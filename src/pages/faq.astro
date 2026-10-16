@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { base } from '../lib/utils';
+---
+
+<BaseLayout
+  title="FAQ — OVERLAND"
+  description="Common questions about OVERLAND expeditions: booking, preparation, difficulty, gear, and safety."
+>
+  <!-- Header -->
+  <header class="pt-40 pb-16 px-6 md:px-12 bg-panel">
+    <div class="max-w-3xl mx-auto">
+      <p class="coords text-xs mb-6 text-accent-ink">QUESTIONS / FAQ</p>
+      <h1
+        class="font-heading font-black italic leading-none text-[length:clamp(3rem,7vw,6rem)] text-cream"
+      >
+        Common
+        <br />
+        Questions
+      </h1>
+    </div>
+  </header>
+
+  <div class="max-w-3xl mx-auto px-6 md:px-12 py-20">
+    {[
+      {
+        category: 'BOOKING & PLANNING',
+        questions: [
+          {
+            q: 'How far in advance should I book?',
+            a: 'For most expeditions, we recommend booking 4–6 months in advance. Peak-season departures (Patagonia November–March, Iceland June–August) fill 8–12 months ahead. Contact us early — if a specific date is sold out, we can often arrange an additional departure.'
+          },
+          {
+            q: 'What is your group size policy?',
+            a: 'Eight clients maximum per certified lead guide. This is not a marketing claim — it is a safety and quality requirement built into every expedition. Smaller groups move faster, the guide can attend to everyone, and the wilderness remains undisturbed by crowds.'
+          },
+          {
+            q: 'What does the price include?',
+            a: 'Pricing varies by expedition and is listed on each journey page. Typically included: OVERLAND guide for all days, accommodation (teahouses or tents depending on destination), all meals from arrival dinner through departure breakfast, internal transport, park fees, and emergency communication equipment. International flights are not included.'
+          },
+          {
+            q: 'What is your cancellation policy?',
+            a: 'Cancellations 90+ days before departure: full refund minus 10% deposit. 60–89 days: 50% refund. 30–59 days: 25% refund. Under 30 days: no refund. We strongly recommend expedition travel insurance, which can cover cancellation for medical reasons.'
+          },
+        ]
+      },
+      {
+        category: 'PREPARATION & FITNESS',
+        questions: [
+          {
+            q: 'How fit do I need to be?',
+            a: 'Fitness requirements are listed on each expedition as "moderate," "challenging," or "extreme." Moderate means comfortable with 6–8 hours of hiking per day with a loaded daypack. Challenging means sustained effort over multiple days in variable conditions. Extreme means high-altitude experience and serious physical conditioning. We\'re honest in these ratings — please read them carefully.'
+          },
+          {
+            q: 'What preparation do you recommend before an expedition?',
+            a: 'You\'ll receive a detailed 12-week training protocol when you book. In general: long aerobic base (hiking with a loaded pack is the best preparation for hiking with a loaded pack), strength work for your legs and core, and altitude pre-acclimatization for Himalayan expeditions. We send the specific protocol for your destination at booking.'
+          },
+          {
+            q: 'Can solo travelers book?',
+            a: 'Yes. Solo travelers can book any of our group departures. You\'ll be placed with others from around the world who are on the same journey. Many of our most memorable groups have formed this way.'
+          },
+        ]
+      },
+      {
+        category: 'SAFETY & GUIDES',
+        questions: [
+          {
+            q: 'What safety systems are in place?',
+            a: 'Every expedition carries emergency satellite communication (PLB and/or inReach). Our guides hold wilderness medicine certifications. For mountain expeditions, we carry supplemental oxygen and a high-altitude medical kit. We have evacuation protocols and relationships with medical facilities at or near every destination.'
+          },
+          {
+            q: 'Who are the guides?',
+            a: 'OVERLAND guides are specialists, not generalists. Elena Vásquez has guided Patagonia for 15 years. Rajan Thapa was born in Namche Bazaar. Marcus Osei holds a wildlife biology degree from Nairobi. Ingrid Storm has crossed Greenland on skis twice. We do not hire generalist travel guides — we hire people who have spent their careers in the specific terrain you\'re visiting.'
+          },
+          {
+            q: 'What happens if weather forces a change to the itinerary?',
+            a: 'Weather is part of the expedition — our guides are trained to adapt, re-route, and make the most of conditions. In the event of a serious safety-related delay or route change, we communicate clearly and provide alternatives. We do not charge for weather-related itinerary changes.'
+          },
+        ]
+      },
+      {
+        category: 'GEAR & EQUIPMENT',
+        questions: [
+          {
+            q: 'Do I need to bring my own sleeping bag?',
+            a: 'Yes. We provide a detailed gear list for your specific expedition at booking. Your sleeping bag must meet the temperature rating we specify — we don\'t recommend cutting corners here. For Himalayan expeditions, we require a bag rated to -20°C. For Patagonia, -10°C minimum.'
+          },
+          {
+            q: 'What gear does OVERLAND provide?',
+            a: 'We provide group camping equipment on wilderness expeditions (tents, cooking gear, water filtration), plus technical equipment where required (crampons and ice axes for glacier crossings, zodiac transport for river navigation, etc.). Personal sleeping bags, sleeping mats, and daypack are always your responsibility.'
+          },
+        ]
+      },
+    ].map((section) => (
+      <div class="mb-16">
+        <p class="coords text-xs mb-8 text-accent-ink">{section.category}</p>
+        <div
+          class="accordion-group space-y-0 border-t border-hairline"
+        >
+          {section.questions.map((item) => (
+            <div class="accordion-item border-b border-hairline">
+              <button
+                class="accordion-trigger w-full text-left py-6 flex items-start justify-between gap-6"
+                aria-expanded="false"
+              >
+                <span
+                  class="font-heading font-bold leading-snug text-[length:1.0625rem] text-primary"
+                >
+                  {item.q}
+                </span>
+                <span
+                  class="accordion-icon shrink-0 mt-1"
+                  aria-hidden="true"
+                >
+                  +
+                </span>
+              </button>
+              <div class="accordion-body overflow-hidden">
+                <p
+                  class="font-body leading-relaxed pb-6 pr-12 text-muted"
+                >
+                  {item.a}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+
+    <!-- Contact nudge -->
+    <div
+      class="mt-12 p-8 rounded text-center bg-surface border border-hairline"
+    >
+      <p class="font-heading font-bold mb-3 text-primary">
+        Still have questions?
+      </p>
+      <p class="font-body text-sm mb-6 text-muted">
+        Every expedition is different. If you don't see your question here, write to us — we respond within 24 hours.
+      </p>
+      <a
+        href={`${base}contact/`}
+        class="inline-flex items-center gap-2 font-heading font-bold uppercase text-sm px-6 py-3 bg-accent text-on-accent tracking-[0.12em]"
+       
+        data-magnetic
+      >
+        Ask a Question
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  function initAccordions() {
+    document.querySelectorAll('.accordion-trigger').forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.accordion-item') as HTMLElement;
+        const body = item.querySelector('.accordion-body') as HTMLElement;
+        const icon = trigger.querySelector('.accordion-icon') as HTMLElement;
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Close all in same group
+        const group = item.closest('.accordion-group');
+        group?.querySelectorAll('.accordion-item').forEach((sib) => {
+          if (sib !== item) {
+            const sibBody = sib.querySelector('.accordion-body') as HTMLElement;
+            const sibTrigger = sib.querySelector('.accordion-trigger') as HTMLElement;
+            const sibIcon = sib.querySelector('.accordion-icon') as HTMLElement;
+            sibBody.style.maxHeight = '0';
+            sibTrigger.setAttribute('aria-expanded', 'false');
+            if (sibIcon) sibIcon.style.transform = 'rotate(0deg)';
+          }
+        });
+
+        if (isOpen) {
+          body.style.maxHeight = '0';
+          trigger.setAttribute('aria-expanded', 'false');
+          if (icon) icon.style.transform = 'rotate(0deg)';
+        } else {
+          body.style.maxHeight = body.scrollHeight + 'px';
+          trigger.setAttribute('aria-expanded', 'true');
+          if (icon) icon.style.transform = 'rotate(45deg)';
+        }
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initAccordions);
+</script>

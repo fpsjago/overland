@@ -1,0 +1,196 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { base } from '../../lib/utils';
+import { responsiveImage, socialImage } from '../../lib/images';
+
+export async function getStaticPaths() {
+  const journeys = await getCollection('journeys');
+  return journeys.map((journey) => ({
+    params: { slug: journey.id },
+    props: { journey },
+  }));
+}
+
+const { journey } = Astro.props;
+const j = journey.data;
+
+const hero = await responsiveImage(j.heroImage, [640, 1024, 1200]);
+const ogImage = await socialImage(j.heroImage);
+---
+
+<BaseLayout
+  title={`${j.title} — OVERLAND`}
+  description={j.excerpt ?? `${j.durationDays}-day expedition: ${j.title}. ${j.difficulty} difficulty. From $${j.price.toLocaleString()}.`}
+  image={ogImage}
+>
+  <!-- Hero -->
+  <div class="on-dark relative h-[85vh] overflow-hidden">
+    <img
+      src={hero.src}
+      srcset={hero.srcset}
+      sizes="100vw"
+      width={hero.width}
+      height={hero.height}
+      alt={j.title}
+      class="absolute inset-0 w-full h-full object-cover"
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+      data-cursor="photo"
+    />
+    <div
+      class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(15,26,11,0.15)_0%,rgba(15,26,11,0.75)_100%)]"
+    />
+    <div class="mapGrid absolute inset-0 pointer-events-none" aria-hidden="true" />
+
+    <div class="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-16">
+      <div class="max-w-4xl">
+        <div class="flex flex-wrap items-center gap-4 mb-6">
+          <span
+            class={`badge-difficulty font-heading font-bold uppercase text-xs px-3 py-1.5 tracking-[0.1em] text-parchment difficulty-${j.difficulty}`}
+          >
+            {j.difficulty}
+          </span>
+          <span class="coords text-xs text-cream/80">
+            {j.durationDays} days
+          </span>
+          <span class="coords text-xs text-cream/80">
+            {j.destination}
+          </span>
+        </div>
+
+        <h1
+          class="font-heading font-black italic leading-none mb-4 text-[length:clamp(2.5rem,6vw,5.5rem)] text-cream"
+        >
+          {j.title}
+        </h1>
+
+        {j.excerpt && (
+          <p class="font-body leading-relaxed max-w-2xl text-cream/70 text-[length:1.0625rem]">
+            {j.excerpt}
+          </p>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="max-w-6xl mx-auto px-6 md:px-12 py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <!-- Itinerary -->
+      <div class="lg:col-span-2">
+        <h2 class="coords text-xs font-normal leading-normal mb-8 text-accent-ink">DAY-BY-DAY ITINERARY</h2>
+
+        <div class="space-y-0">
+          {j.itinerary.map((item) => (
+            <div
+              class="flex gap-6 py-8 border-b border-hairline"
+             
+              data-reveal
+            >
+              <div class="shrink-0 pt-1">
+                <span
+                  class="font-heading font-black italic text-[length:2rem] text-hairline leading-none"
+                >
+                  {String(item.day).padStart(2, '0')}
+                </span>
+              </div>
+              <div>
+                <h3
+                  class="font-heading font-bold mb-2 text-[length:1.125rem] text-primary"
+                >
+                  {item.title}
+                </h3>
+                <p class="font-body leading-relaxed text-muted">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- What's Included -->
+        <div class="mt-16" data-reveal>
+          <h2 class="coords text-xs font-normal leading-normal mb-8 text-accent-ink">WHAT'S INCLUDED</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {j.included.map(item => (
+              <div
+                class="flex items-start gap-3 p-4 rounded bg-surface border border-hairline"
+              >
+                <svg class="shrink-0 mt-0.5" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8l3.5 3.5L13 4" stroke="#476F35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p class="font-body text-sm text-ink">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Gear List -->
+        <div class="mt-16" data-reveal>
+          <h2 class="coords text-xs font-normal leading-normal mb-8 text-accent-ink">RECOMMENDED GEAR</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {j.gear.map(item => (
+              <div class="flex items-start gap-3 py-3 border-b border-hairline">
+                <span class="text-accent-ink mt-0.5">—</span>
+                <p class="font-body text-sm text-muted">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <div
+          class="sticky top-28 p-8 rounded bg-surface border border-hairline"
+        >
+          <h2 class="coords text-xs font-normal leading-normal mb-6 text-accent-ink">EXPEDITION SUMMARY</h2>
+
+          <div class="space-y-5 mb-8">
+            <div class="border-b pb-5 border-hairline">
+              <p class="text-xs uppercase font-heading font-bold mb-1 text-muted tracking-[0.1em]">Duration</p>
+              <p class="font-heading font-black text-[length:1.5rem] text-primary">
+                {j.durationDays} <span class="text-base font-normal text-muted">days</span>
+              </p>
+            </div>
+            <div class="border-b pb-5 border-hairline">
+              <p class="text-xs uppercase font-heading font-bold mb-1 text-muted tracking-[0.1em]">From</p>
+              <p class="font-heading font-black text-[length:1.5rem] text-primary">
+                ${j.price.toLocaleString()} <span class="text-sm font-normal text-muted">per person</span>
+              </p>
+            </div>
+            <div class="border-b pb-5 border-hairline">
+              <p class="text-xs uppercase font-heading font-bold mb-1 text-muted tracking-[0.1em]">Difficulty</p>
+              <p
+                class={`badge-ink font-heading font-bold difficulty-${j.difficulty}`}
+              >
+                {j.difficulty}
+              </p>
+            </div>
+            <div>
+              <p class="text-xs uppercase font-heading font-bold mb-1 text-muted tracking-[0.1em]">Destination</p>
+              <p class="font-body text-ink">{j.destination}</p>
+            </div>
+          </div>
+
+          <a
+            href={`${base}contact/`}
+            class="w-full flex items-center justify-center gap-3 py-4 font-heading font-bold uppercase text-sm transition-all duration-300 mb-3 bg-accent text-on-accent tracking-[0.12em]"
+           
+            data-magnetic
+          >
+            Book This Expedition
+          </a>
+          <a
+            href={`${base}journeys/`}
+            class="w-full flex items-center justify-center gap-3 py-3 font-heading font-bold uppercase text-xs border transition-all duration-300 border-hairline text-muted tracking-[0.1em]"
+          >
+            ← All Expeditions
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,12 @@
+{
+  "name": "Borneo Highlands",
+  "region": "Southeast Asia",
+  "country": "Malaysia / Indonesia",
+  "coordinates": { "lat": 1.5533, "lng": 110.3592 },
+  "difficulty": "challenging",
+  "terrain": ["rainforest", "limestone karst", "river", "montane"],
+  "season": "April – October",
+  "highlights": ["Gunung Mulu Caves", "Danum Valley", "Kinabalu Summit", "Orangutan sanctuary"],
+  "heroImage": "_assets/dest-borneo.jpg",
+  "gallery": ["_assets/journey-borneo.jpg"]
+}

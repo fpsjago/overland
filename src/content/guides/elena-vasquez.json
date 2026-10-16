@@ -1,0 +1,9 @@
+{
+  "slug": "elena-vasquez",
+  "name": "Elena Vásquez",
+  "role": "Lead Expedition Guide — Patagonia & Andes",
+  "bio": "Elena has spent fifteen years navigating the southern latitudes. Born in Punta Arenas, she led her first commercial trek at nineteen and has since guided over 200 expeditions through Torres del Paine, Los Glaciares, and the remote fjords of Chilean Patagonia. She holds wilderness medicine certification and a deep respect for the weather systems that dictate everything south of 50°S.",
+  "expeditions": ["Patagonia Full Circuit", "Carretera Austral", "Tierra del Fuego Traverse"],
+  "image": "_assets/guide-1.jpg",
+  "specialties": ["High-wind navigation", "Glaciology field interpretation", "Wilderness medicine", "Spanish/English/Portuguese"]
+}

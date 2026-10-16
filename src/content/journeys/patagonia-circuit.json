@@ -1,0 +1,51 @@
+{
+  "slug": "patagonia-circuit",
+  "title": "Patagonia Full Circuit",
+  "destination": "Patagonia",
+  "durationDays": 18,
+  "price": 4800,
+  "difficulty": "challenging",
+  "heroImage": "_assets/journey-patagonia.jpg",
+  "excerpt": "Eighteen days traversing the raw southern edge of the continent — granite towers, grinding glaciers, and windswept steppe.",
+  "itinerary": [
+    { "day": 1, "title": "Arrival in Punta Arenas", "description": "Transfer to Torres del Paine. Acclimatize, gear check, team briefing over a shared asado." },
+    { "day": 2, "title": "W Trek Begin — Lago Grey", "description": "First full day hiking toward Glacier Grey. Blue ice calving into the lake, wind from the Southern Ice Field." },
+    { "day": 3, "title": "Paso John Gardner", "description": "The high pass connecting the W Trek to the O Circuit. Full view of the ice field on clear days." },
+    { "day": 4, "title": "Remote Campsite — Río de los Perros", "description": "Isolated valley. No other trekkers. Wild camping by a glacial river with guanacos on the opposite bank." },
+    { "day": 5, "title": "Seron & Dickson", "description": "Long valley traverse. Rheas and flamingos in the lowland wetlands. Estancia Dickson for resupply." },
+    { "day": 6, "title": "Los Cuernos", "description": "The horns of Torres del Paine at sunset — iron-stained igneous peaks catching last light in rust and gold." },
+    { "day": 7, "title": "Mirador Las Torres", "description": "4am alpine start. The granite towers at sunrise. Silence except for wind and distant rock fall." },
+    { "day": 8, "title": "Rest Day — Puerto Natales", "description": "Gear dry-out. Debrief. Optional kayak in the fjord." },
+    { "day": 9, "title": "Transfer to El Calafate", "description": "Border crossing into Argentina. Patagonian steppe. Condors overhead." },
+    { "day": 10, "title": "Perito Moreno Glacier", "description": "Stand on the glacier. Hear it move. Ice trekking with crampons through a blue-white labyrinth." },
+    { "day": 11, "title": "Los Glaciares Sector Sur", "description": "Remote southern section of the national park. No crowds. Camping below Cerro Torre." },
+    { "day": 12, "title": "Fitz Roy Massif", "description": "Classic approach to Laguna de los Tres. Fitz Roy at close range — arguably the most beautiful mountain on earth." },
+    { "day": 13, "title": "El Chaltén Village", "description": "Argentina's trekking capital. Microbreweries, wood-fired kitchens, climbers studying route topos." },
+    { "day": 14, "title": "Carretera Austral North", "description": "Drive north into Chile's scenic highway. Hanging glaciers drip into roadside rivers." },
+    { "day": 15, "title": "Cochrane & Baker River", "description": "Wild swimming in the turquoise Baker — the Patagonian river no one talks about." },
+    { "day": 16, "title": "Corcovado Wilderness", "description": "Rarely visited rainforest. Inland navigation by zodiac. Volcanic activity visible from camp." },
+    { "day": 17, "title": "Final Camp", "description": "Last night in the field. Stars from horizon to horizon. No light pollution in any direction." },
+    { "day": 18, "title": "Return to Puerto Montt", "description": "Journey ends. Optional Santiago connection." }
+  ],
+  "included": [
+    "Experienced OVERLAND lead guide + local specialist",
+    "All meals from Day 1 dinner through Day 18 breakfast",
+    "Group camping equipment (tents, sleeping mats, cooking gear)",
+    "All park entrance fees (Torres del Paine, Los Glaciares)",
+    "Internal transfers and border crossing logistics",
+    "Emergency satellite communication device",
+    "Daily briefings and printed route notes"
+  ],
+  "gear": [
+    "3-season sleeping bag rated to -10°C",
+    "Waterproof hiking boots (broken in)",
+    "Trekking poles",
+    "Hardshell jacket + trousers (Patagonia wind is serious)",
+    "Merino base layers (2 sets minimum)",
+    "Gaiters",
+    "Sunscreen + lip balm SPF 50+",
+    "Personal first aid kit",
+    "Headlamp + spare batteries",
+    "Camera (the light here earns it)"
+  ]
+}

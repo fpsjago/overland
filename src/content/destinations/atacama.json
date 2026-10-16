@@ -1,0 +1,12 @@
+{
+  "name": "Atacama Desert",
+  "region": "South America",
+  "country": "Chile",
+  "coordinates": { "lat": -23.1953, "lng": -68.1963 },
+  "difficulty": "moderate",
+  "terrain": ["salt flats", "volcanic", "highland plateau", "canyon"],
+  "season": "Year-round (avoid July–Aug for cold)",
+  "highlights": ["Valle de la Luna", "El Tatio Geysers", "Salar de Atacama", "Altiplano lagoons"],
+  "heroImage": "_assets/dest-atacama.jpg",
+  "gallery": ["_assets/journey-atacama.jpg"]
+}

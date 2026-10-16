@@ -1,0 +1,420 @@
+---
+/**
+ * OVERLAND — BaseLayout.astro
+ */
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import '../styles/skins.css';
+import { Nav } from '../components/Nav';
+import { Cursor } from '../components/Cursor';
+import { Footer } from '../components/Footer';
+// Same file the @font-face in global.css points at, so Vite emits one asset
+// and the preload hits the exact URL the stylesheet requests.
+import archivoItalic from '../assets/fonts/archivo-900-italic-latin.woff2?url';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  skin?: 'map' | 'night' | 'arctic';
+}
+
+const {
+  title,
+  description = 'OVERLAND — Premium Adventure & Expedition Travel. Curated journeys into the world\'s most remote terrain.',
+  image,
+  skin = 'map',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://fpsjago.github.io');
+// Social crawlers need an absolute URL for og:image / twitter:image.
+const ogImage = new URL(image ?? `${base}_assets/og-image.jpg`, Astro.site ?? 'https://fpsjago.github.io').href;
+---
+
+<!doctype html>
+<html lang="en" data-skin={skin}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+
+  <!-- Skin, restored before first paint so a chosen skin never flashes the
+       default. Order: ?skin= in the URL (demo links, testing), then the
+       visitor's saved choice, then the page's own default. -->
+  <script is:inline>
+    (function () {
+      var skins = ['map', 'night', 'arctic'];
+      var pick = null;
+      try {
+        var q = new URLSearchParams(location.search).get('skin');
+        if (q && skins.indexOf(q) !== -1) {
+          pick = q;
+          localStorage.setItem('overland:skin', q);
+        } else {
+          var saved = localStorage.getItem('overland:skin');
+          if (saved && skins.indexOf(saved) !== -1) pick = saved;
+        }
+      } catch (e) {}
+      if (pick) document.documentElement.setAttribute('data-skin', pick);
+    })();
+  </script>
+
+  <!-- Fonts are self-hosted (see @font-face in global.css). Only the
+       Archivo italic file is preloaded: it draws the hero wordmark, which
+       is the largest text on the first screen. -->
+  <link rel="preload" href={archivoItalic} as="font" type="font/woff2" crossorigin />
+
+  <slot name="head" />
+
+  <!-- Primary meta -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:site_name" content="OVERLAND" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+  <link rel="icon" type="image/x-icon" href={`${base}favicon.ico`} />
+
+  <!-- JSON-LD: TravelAgency structured data -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "OVERLAND",
+    "description": description,
+    "url": "https://fpsjago.github.io/overland",
+    "logo": `${base}favicon.svg`,
+    "image": ogImage,
+    "foundingDate": "2006",
+    "areaServed": "Worldwide",
+    "slogan": "Small expeditions. Wild places.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "book@example.com"
+    }
+  })} />
+
+  <!-- View Transitions -->
+  <ClientRouter />
+
+  <!-- View Transition timing overrides.
+       Do NOT add a CSS `@view-transition { navigation: auto }` rule here:
+       the native CSS trigger and Astro's <ClientRouter> both claim the
+       navigation and must not be combined. -->
+  <style is:global>
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 0.25s;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip navigation (accessibility) -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Grain overlay — fixed, full-page, pointer-events none -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Custom cursor (persistent island; rebinds itself on every navigation).
+       client:idle: React is fetched after first paint, not before it. -->
+  <Cursor client:idle />
+
+  <!-- Navigation -->
+  <!-- client:idle: the server HTML already has every link; only the mobile
+       burger needs JS, and it hydrates as soon as the main thread is free. -->
+  <Nav base={base} client:idle />
+
+  <!-- Page content -->
+  <main id="main">
+    <slot />
+  </main>
+
+  <!-- Footer (static: no client state, so no hydration) -->
+  <Footer base={base} />
+
+  <!-- Skin Switcher (demo tool, discreet floating pill; see CUSTOMIZATION.md to remove) -->
+  <div
+    id="skin-switcher"
+    class="fixed bottom-5 right-5 z-[9998] flex flex-col-reverse gap-2 items-end"
+    role="group"
+    aria-label="Colour skin"
+  >
+    <button
+      id="skin-toggle"
+      type="button"
+      class="skin-chip inline-flex items-center gap-2.5 min-h-11 text-[length:0.65rem] tracking-[0.15em] px-4"
+      aria-expanded="false"
+      aria-controls="skin-options"
+    >
+      <span class="skin-swatch" aria-hidden="true"></span>
+      Skin
+    </button>
+    <div id="skin-options" class="skin-options flex-col gap-1.5 items-end">
+      {([
+        ['map', 'The Map'],
+        ['night', 'Night Camp'],
+        ['arctic', 'Arctic'],
+      ] as const).map(([s, label]) => (
+        <button
+          type="button"
+          data-skin-opt={s}
+          aria-pressed="false"
+          class="skin-chip inline-flex items-center gap-2.5 min-h-10 text-[length:0.6rem] tracking-[0.12em] px-3.5 whitespace-nowrap"
+        >
+          <span class={`skin-swatch skin-swatch--${s}`} aria-hidden="true"></span>
+          {label}
+        </button>
+      ))}
+    </div>
+  </div>
+</body>
+</html>
+
+<!-- ============================================================
+     LENIS SMOOTH SCROLL + GSAP SCROLLTRIGGER
+     Manages lifecycle with Astro ViewTransitions.
+     ============================================================ -->
+<script>
+  // Lenis + GSAP are loaded with dynamic import() AFTER the load event and an
+  // idle slot, so neither library competes with first paint or the LCP.
+  // With reduced motion they are never downloaded at all.
+  import type Lenis from 'lenis';
+
+  type Motion = {
+    lenis: Lenis | null;
+    LenisCtor: typeof Lenis;
+    gsap: typeof import('gsap').gsap;
+    ScrollTrigger: typeof import('gsap/ScrollTrigger').ScrollTrigger;
+  };
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let motion: Motion | null = null;
+  let loading: Promise<Motion> | null = null;
+
+  // Smooth scroll is only felt once the visitor moves, so the libraries load
+  // on the first interaction, or after the page has sat idle for a while,
+  // whichever comes first. Nothing here competes with the first paint.
+  function whenIdle(): Promise<void> {
+    return new Promise((resolve) => {
+      const events = ['wheel', 'touchstart', 'pointermove', 'keydown', 'scroll'] as const;
+      let done = false;
+      const go = () => {
+        if (done) return;
+        done = true;
+        events.forEach((e) => window.removeEventListener(e, go));
+        resolve();
+      };
+      events.forEach((e) => window.addEventListener(e, go, { once: true, passive: true }));
+      const idleLater = () =>
+        setTimeout(() => {
+          if ('requestIdleCallback' in window) window.requestIdleCallback(go, { timeout: 1000 });
+          else go();
+        }, 3000);
+      if (document.readyState === 'complete') idleLater();
+      else window.addEventListener('load', idleLater, { once: true });
+    });
+  }
+
+  function loadMotion(): Promise<Motion> {
+    loading ??= whenIdle().then(async () => {
+      const [{ default: LenisCtor }, { gsap }, { ScrollTrigger }] = await Promise.all([
+        import('lenis'),
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+      const m: Motion = { lenis: null, LenisCtor, gsap, ScrollTrigger };
+      // One ticker callback for the tab's lifetime; it drives whichever
+      // Lenis instance is current.
+      gsap.ticker.add((time: number) => m.lenis?.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+      motion = m;
+      return m;
+    });
+    return loading;
+  }
+
+  async function initScrolling(): Promise<void> {
+    if (reduced) return;
+    const m = await loadMotion();
+    m.lenis?.destroy();
+    m.lenis = new m.LenisCtor({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1.2,
+      touchMultiplier: 2,
+    });
+    m.lenis.on('scroll', m.ScrollTrigger.update);
+  }
+
+  // Cleanup BEFORE the next page is swapped in.
+  document.addEventListener('astro:before-preparation', () => {
+    if (!motion) return;
+    motion.lenis?.destroy();
+    motion.lenis = null;
+    motion.gsap.killTweensOf('*');
+    motion.ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  });
+
+  // astro:page-load fires on the first load and after every navigation.
+  document.addEventListener('astro:page-load', () => {
+    void initScrolling();
+  });
+</script>
+
+<!-- ============================================================
+     SCROLL REVEAL — IntersectionObserver
+     Uses [data-reveal] and [data-reveal-stagger] attributes.
+     Reveal once: an element that has been seen stays visible, so a fast
+     flick or a jump never leaves a section stranded half-hidden. The huge
+     top rootMargin counts anything already ABOVE the viewport (scrollbar
+     drag, End key, anchor jump) as intersecting, so it reveals too.
+     Only the static sections use these attributes; React islands manage
+     their own reveals.
+     ============================================================ -->
+<script is:inline>
+  function initScrollReveals() {
+    if (window.scrollRevealObserver) window.scrollRevealObserver.disconnect();
+    var targets = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
+    window.scrollRevealObserver = new IntersectionObserver(
+      function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.1, rootMargin: '100000px 0px -8% 0px' }
+    );
+    targets.forEach(function (el) { window.scrollRevealObserver.observe(el); });
+  }
+
+  if (document.readyState !== 'loading') initScrollReveals();
+  document.addEventListener('astro:page-load', initScrollReveals);
+</script>
+
+<!-- ============================================================
+     MAGNETIC BUTTONS — [data-magnetic] attribute
+     ============================================================ -->
+<script is:inline>
+  function initMagnetic() {
+    if (window._magneticAbort) window._magneticAbort.abort();
+    // Fine pointers only, and never when motion is reduced.
+    if (!window.matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)').matches) return;
+    window._magneticAbort = new AbortController();
+    var signal = window._magneticAbort.signal;
+
+    document.querySelectorAll('[data-magnetic]').forEach(function(el) {
+      el.addEventListener('mousemove', function(e) {
+        var rect = el.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width - 0.5) * 36;
+        var y = ((e.clientY - rect.top) / rect.height - 0.5) * 18;
+        el.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+      }, { signal: signal });
+
+      el.addEventListener('mouseleave', function() {
+        el.style.transform = 'translate(0px, 0px)';
+        el.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+      }, { signal: signal });
+
+      el.addEventListener('mouseenter', function() {
+        el.style.transition = 'transform 0.1s ease-out';
+      }, { signal: signal });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initMagnetic);
+  document.addEventListener('astro:page-load', initMagnetic);
+</script>
+
+<!-- ============================================================
+     SKIN SWITCHER
+     ============================================================ -->
+<script is:inline>
+  var SKIN_KEY = 'overland:skin';
+  var SKINS = ['map', 'night', 'arctic'];
+
+  function savedSkin() {
+    try {
+      var s = localStorage.getItem(SKIN_KEY);
+      return SKINS.indexOf(s) !== -1 ? s : null;
+    } catch (e) { return null; }
+  }
+
+  function syncPressed() {
+    var current = document.documentElement.getAttribute('data-skin') || 'map';
+    document.querySelectorAll('[data-skin-opt]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', btn.getAttribute('data-skin-opt') === current ? 'true' : 'false');
+    });
+  }
+
+  function initSkinSwitcher() {
+    var toggle = document.getElementById('skin-toggle');
+    var options = document.getElementById('skin-options');
+    if (!toggle || !options) return;
+    syncPressed();
+
+    function setOpen(open) {
+      options.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    toggle.addEventListener('click', function () {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    options.querySelectorAll('[data-skin-opt]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var skin = btn.getAttribute('data-skin-opt');
+        document.documentElement.setAttribute('data-skin', skin);
+        try { localStorage.setItem(SKIN_KEY, skin); } catch (e) {}
+        syncPressed();
+        setOpen(false);
+        toggle.focus();
+      });
+    });
+
+    document.getElementById('skin-switcher').addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+
+  // <ClientRouter> copies the incoming page's <html> attributes, which would
+  // reset data-skin to the server default; put the visitor's choice back
+  // before the new page paints. Registered once for the tab's lifetime.
+  if (!window._overlandSkinSwap) {
+    window._overlandSkinSwap = true;
+    document.addEventListener('astro:after-swap', function () {
+      var s = savedSkin();
+      if (s) document.documentElement.setAttribute('data-skin', s);
+    });
+  }
+
+  // astro:page-load fires once on first load and once per navigation, and
+  // each navigation brings a fresh switcher, so this binds exactly once.
+  document.addEventListener('astro:page-load', initSkinSwitcher);
+</script>

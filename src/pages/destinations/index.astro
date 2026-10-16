@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { base, byId } from '../../lib/utils';
+import { responsiveImage } from '../../lib/images';
+
+const destinations = byId(await getCollection('destinations'));
+const covers = await Promise.all(destinations.map((d) => responsiveImage(d.data.heroImage, [400, 640, 800])));
+---
+
+<BaseLayout
+  title="Destinations — OVERLAND"
+  description="47 expedition destinations across six continents. Find the terrain that fits your ambition."
+>
+  <!-- Page header -->
+  <header class="pt-40 pb-20 px-6 md:px-12 bg-panel">
+    <div class="max-w-6xl mx-auto">
+      <p class="coords text-xs mb-6 text-accent-ink">
+        DESTINATIONS / GLOBAL EXPEDITIONS
+      </p>
+      <h1
+        class="font-heading font-black italic leading-none mb-6 text-[length:clamp(3rem,8vw,7rem)] text-cream"
+      >
+        Where We Go
+      </h1>
+      <p
+        class="font-body leading-relaxed max-w-2xl text-cream/65 text-[length:1.0625rem]"
+      >
+        Every destination in the OVERLAND portfolio has been scouted, guided, and refined over multiple seasons. We go to the places that reward the prepared.
+      </p>
+    </div>
+  </header>
+
+  <!-- Destinations grid -->
+  <section class="py-20 px-6 md:px-12 bg-canvas">
+    <div class="max-w-6xl mx-auto">
+      <!-- Filter bar placeholder -->
+      <div class="flex items-center gap-6 mb-12 pb-6 border-b border-hairline">
+        <span class="font-heading font-bold text-sm uppercase text-muted tracking-[0.12em]">
+          {destinations.length} Destinations
+        </span>
+      </div>
+
+      <!-- Magazine cover grid — asymmetric -->
+      <!-- grid-flow-row-dense: the wide 5th card cannot fit beside two
+           others, and without dense packing it wrapped and left an empty
+           cell; the next card now back-fills that slot. -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-flow-row-dense gap-6">
+        {destinations.map((dest, i) => {
+          const d = dest.data;
+          const isLarge = i === 0 || i === 4; // 1st and 5th span full width
+          return (
+            <a
+              href={`${base}destinations/${dest.id}/`}
+              class={`trail-card group relative block overflow-hidden rounded ${
+                isLarge ? 'md:col-span-2 min-h-[500px]' : 'min-h-[380px]'
+              }`}
+              data-cursor="photo"
+              data-reveal="scale"
+            >
+              <!-- Image -->
+              <img
+                src={covers[i]?.src}
+                srcset={covers[i]?.srcset}
+                sizes={isLarge ? '(min-width: 768px) 760px, 100vw' : '(min-width: 1024px) 370px, (min-width: 768px) 50vw, 100vw'}
+                alt=""
+                width={covers[i]?.width}
+                height={covers[i]?.height}
+                loading="lazy"
+                decoding="async"
+                class="trail-card__img absolute inset-0 w-full h-full object-cover"
+              />
+
+              <!-- Gradient -->
+              <div
+                class="absolute inset-0 bg-[linear-gradient(to_top,rgba(15,26,11,0.88)_0%,rgba(15,26,11,0.1)_60%,transparent_100%)]"
+              />
+
+              <!-- Content -->
+              <div class="absolute bottom-0 left-0 right-0 p-6">
+                <div class="flex items-center gap-3 mb-3">
+                  <span
+                    class={`badge-difficulty font-heading font-bold uppercase text-xs px-3 py-1 rounded-full tracking-[0.1em] text-parchment difficulty-${d.difficulty}`}
+                  >
+                    {d.difficulty}
+                  </span>
+                  <span class="coords text-xs text-cream/70">
+                    {d.region}
+                  </span>
+                </div>
+
+                <h2
+                  class="font-heading font-black italic leading-tight mb-1 text-[length:clamp(1.5rem,3vw,2rem)] text-cream"
+                >
+                  <span class="trail-card__title">{d.name}</span>
+                </h2>
+                <p class="text-sm text-cream/70">
+                  {d.country} · {d.season}
+                </p>
+
+                <!-- Highlights -->
+                <div class="mt-4 flex flex-wrap gap-2">
+                  {d.highlights.slice(0, 2).map(h => (
+                    <span
+                      class="text-xs font-body px-2 py-1 rounded bg-cream/10 text-cream/85 border border-cream/15"
+                    >
+                      {h}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Index -->
+              <div
+                class="absolute top-4 right-4 font-heading font-black italic text-cream/10 text-[length:3rem] leading-none"
+               
+                aria-hidden="true"
+              >
+                {String(i + 1).padStart(2, '0')}
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

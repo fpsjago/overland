@@ -1,0 +1,9 @@
+{
+  "slug": "rajan-thapa",
+  "name": "Rajan Thapa",
+  "role": "Lead Expedition Guide — Himalayas & High Asia",
+  "bio": "Rajan was born in Namche Bazaar, the same village that has sent more mountaineers to the summit of Everest than any other place on earth. He holds an advanced trekking guide certification from the Nepal Mountaineering Association and has guided the Khumbu region for eighteen years. He has summited Island Peak fourteen times and carries the route knowledge of someone who has walked every trail in every season.",
+  "expeditions": ["Everest Region Traverse", "Annapurna Circuit", "Upper Mustang Expedition"],
+  "image": "_assets/guide-4.jpg",
+  "specialties": ["High altitude physiology", "Sherpa culture and history", "Route finding above 5,000m", "Nepali / Sherpa / English"]
+}

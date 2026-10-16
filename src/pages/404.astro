@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { base } from '../lib/utils';
+---
+
+<BaseLayout
+  title="Trail Not Found — OVERLAND"
+  description="This route doesn't appear on our maps."
+>
+  <div
+    class="min-h-screen flex flex-col items-center justify-center px-6 text-center relative overflow-hidden bg-panel"
+  >
+    <!-- Topographic background pattern -->
+    <div class="mapGrid absolute inset-0 pointer-events-none opacity-30" aria-hidden="true" />
+    <div class="grain absolute inset-0 pointer-events-none" aria-hidden="true" />
+
+    <!-- GPS error display -->
+    <div class="relative z-10">
+      <p class="coords mb-8 text-cream/70 text-[length:0.65rem] tracking-[0.2em]">
+        SIGNAL LOST · 0.0000° N, 0.0000° E
+      </p>
+
+      <div
+        class="font-heading font-black italic leading-none mb-4 text-cream/[0.06] text-[length:clamp(6rem,20vw,16rem)]"
+        aria-hidden="true"
+      >
+        404
+      </div>
+
+      <div class="relative z-[2] -mt-16">
+        <h1
+          class="font-heading font-black italic leading-tight mb-6 text-cream text-[length:clamp(2rem,5vw,4rem)]"
+        >
+          Trail Not Found
+        </h1>
+        <p
+          class="font-body leading-relaxed mb-12 max-w-md mx-auto text-cream/70 text-[length:1.0625rem]"
+        >
+          This route doesn't appear on our maps. The terrain ahead is unmapped — which sometimes means it's the most interesting kind.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href={`${base}`}
+            class="inline-flex items-center gap-3 px-8 py-4 font-heading font-bold uppercase text-sm tracking-[0.12em] bg-accent text-on-accent"
+            data-magnetic
+          >
+            Return to Base Camp
+          </a>
+          <a
+            href={`${base}destinations/`}
+            class="inline-flex items-center gap-3 px-8 py-4 font-heading font-bold uppercase text-sm tracking-[0.12em] border border-cream/20 text-cream"
+          >
+            Explore Destinations
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom coordinate decoration -->
+      <p
+        class="coords mt-16 text-cream/70 text-[length:0.65rem] tracking-[0.2em]"
+      >
+        ELEVATION: UNKNOWN · BEARING: RECALCULATING
+      </p>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,293 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { StatsBar } from '../components/StatsBar';
+import { DestinationsTeaser } from '../components/DestinationsTeaser';
+import { HowWeJourney } from '../components/HowWeJourney';
+import { FeaturedJourneys } from '../components/FeaturedJourneys';
+import { Testimonials, testimonials } from '../components/Testimonials';
+import { PartnersMarquee } from '../components/PartnersMarquee';
+import { ExpeditionCTA } from '../components/ExpeditionCTA';
+import { getImage } from 'astro:assets';
+import { base, byId } from '../lib/utils';
+import panoramicHero from '../assets/images/panoramic-hero.jpg';
+import { responsiveImage } from '../lib/images';
+import type { RailCard } from '../types';
+
+const allDestinations = byId(await getCollection('destinations'));
+const allJourneys = byId(await getCollection('journeys'));
+
+// Limit teaser to first 6 destinations, featured journeys to first 3
+const teaserDestinations = allDestinations.slice(0, 6);
+const featuredJourneys = allJourneys.slice(0, 3);
+
+// Hero panorama: rendered at 400% of the stage width with object-cover, so
+// its painted width is 400vw on landscape screens and 400vh (4 x height)
+// on portrait ones. `sizes` says exactly that, and the browser picks the
+// smallest variant that stays sharp. AVIF first, WebP as the fallback.
+const heroWidths = [2400, 3600, 4800, 6000];
+// Portrait (phones): the true painted width is 400vh, but the photo sits
+// under a dark scrim at phone size, so 200vh is declared on purpose. A
+// 1.75x phone then takes the 3600px file (26 KB) instead of 6000px (46 KB),
+// which keeps more of the first-paint budget for the wordmark font.
+const heroSizes = '(max-aspect-ratio: 1/1) 200vh, 400vw';
+const heroAvif = await Promise.all(
+  heroWidths.map((width) => getImage({ src: panoramicHero, width, format: 'avif', quality: 50 })),
+);
+const heroWebp = await Promise.all(
+  heroWidths.map((width) => getImage({ src: panoramicHero, width, format: 'webp', quality: 72 })),
+);
+const toSrcset = (images: typeof heroAvif) =>
+  images.map((img, i) => `${img.src} ${heroWidths[i]}w`).join(', ');
+const heroAvifSrcset = toSrcset(heroAvif);
+const heroWebpSrcset = toSrcset(heroWebp);
+const heroFallback = heroWebp[1] ?? heroWebp[0]!;
+
+// Below-the-fold photos: resized WebP sets, computed here (server side) and
+// handed to the components as plain props.
+const railCards: RailCard[] = await Promise.all(
+  teaserDestinations.map(async (d) => ({
+    id: d.id,
+    name: d.data.name,
+    country: d.data.country,
+    difficulty: d.data.difficulty,
+    lat: d.data.coordinates.lat,
+    lng: d.data.coordinates.lng,
+    image: await responsiveImage(d.data.heroImage, [360, 560, 720], 62),
+  })),
+);
+const journeyImages = Object.fromEntries(
+  await Promise.all(
+    featuredJourneys.map(async (j) => [j.id, await responsiveImage(j.data.heroImage, [640, 960, 1200])] as const),
+  ),
+);
+const avatarImages = await Promise.all(testimonials.map((t) => responsiveImage(t.avatar, [96])));
+const ctaImage = await responsiveImage('_assets/bg-campfire.jpg', [800, 1200], 65);
+---
+
+<BaseLayout
+  title="OVERLAND — Expedition Travel"
+  description="Boutique expedition travel. Small groups, expert guides, and the places that test the limits of who you are."
+>
+  <!-- ================================================================
+       HERO — panoramic scrub
+       A 220vh wrapper holds a sticky 100vh stage. The 4:1 panorama is
+       400% of the stage wide and drifts 0 → -75% as the wrapper scrolls
+       (script at the bottom of this file). Reduced motion: no drift.
+       First paint is cheap on purpose: the photo is a 30–45 KB AVIF picked
+       by `sizes`, the wordmark is the LCP element and is never hidden, and
+       the entrance below is pure CSS (no JS, no opaque preloader).
+  ================================================================ -->
+  <div id="hero-wrapper" class="relative h-[220vh]">
+    <div id="hero-inner" class="on-dark sticky top-0 overflow-hidden h-screen w-full bg-panel">
+      <!-- Panoramic photo (4x wide: 400% of the viewport) -->
+      <div
+        id="pan-photo"
+        class="absolute top-0 left-0 h-full w-[400%] will-change-transform"
+        data-cursor="photo"
+      >
+        <picture>
+          <source type="image/avif" srcset={heroAvifSrcset} sizes={heroSizes} />
+          <img
+            src={heroFallback.src}
+            srcset={heroWebpSrcset}
+            sizes={heroSizes}
+            width={heroFallback.attributes.width}
+            height={heroFallback.attributes.height}
+            alt="Snow-dusted ridgelines fading into a sunset haze, layer after layer to the horizon"
+            class="hero-photo h-full w-full object-cover"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
+        <!-- Crosshatch map grid overlay -->
+        <div class="mapGrid absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+      </div>
+
+      <!-- Scrim: static gradient + a second layer the scroll fades in, so
+           the darkening never needs a per-frame gradient string. -->
+      <div class="absolute inset-0 pointer-events-none bg-[linear-gradient(to_bottom,rgba(15,26,11,0.45)_0%,rgba(15,26,11,0.12)_38%,rgba(15,26,11,0.6)_100%)]" aria-hidden="true"></div>
+      <div id="hero-dusk" class="absolute inset-0 pointer-events-none opacity-0 bg-[rgba(15,26,11,0.35)]" aria-hidden="true"></div>
+
+      <!-- Hero content stays put while the photo travels beneath it -->
+      <div class="absolute inset-0 flex flex-col justify-between pointer-events-none z-10 px-6 sm:px-8 md:px-12 pt-28 pb-10 md:pb-12">
+        <!-- Top bar -->
+        <div class="flex items-start justify-between w-full gap-6">
+          <p class="hero-rise coords text-xs text-cream/80">
+            EXPEDITION TRAVEL · SINCE 2006
+          </p>
+
+          <!-- GPS readout: compass settles to north on load, the numbers
+               follow the scroll from the fjords to Patagonia. -->
+          <div class="hero-rise flex items-start gap-3 text-right [--rise-delay:120ms]">
+            <div aria-live="off" class="whitespace-nowrap">
+              <p id="gps-lat" class="coords text-[length:0.7rem] text-cream/80 tracking-[0.12em] tabular-nums">
+                61.2247° N
+              </p>
+              <p id="gps-lng" class="coords text-[length:0.7rem] text-cream/80 tracking-[0.12em] tabular-nums">
+                6.8782° E
+              </p>
+            </div>
+            <svg class="hero-compass shrink-0" width="28" height="28" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <circle cx="32" cy="32" r="30" stroke="rgba(232,223,200,0.45)" stroke-width="2" />
+              <polygon points="32,8 28,32 36,32" fill="var(--accent-on-dark)" />
+              <polygon points="32,56 28,32 36,32" fill="rgba(232,223,200,0.55)" />
+              <circle cx="32" cy="32" r="3.5" fill="#E8DFC8" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Bottom left: wordmark + sub-headline + CTA -->
+        <div class="max-w-5xl">
+          <h1
+            class="hero-wordmark wordmark italic font-black leading-none mb-6 text-cream max-sm:text-[length:14.5vw]"
+            aria-label="OVERLAND — Expedition Travel"
+          >
+            OVERLAND
+          </h1>
+
+          <div class="flex flex-col sm:flex-row sm:items-center items-start gap-6">
+            <p class="hero-rise font-body italic text-[length:clamp(0.95rem,1.5vw,1.125rem)] text-cream/85 max-w-[36ch] leading-[1.6] [--rise-delay:200ms]">
+              Small expeditions. Wild places.
+              <br />
+              Guides who have spent their lives here.
+            </p>
+
+            <a
+              href={`${base}destinations/`}
+              class="hero-rise btn-cta pointer-events-auto group inline-flex items-center gap-3 px-7 py-3.5 font-heading font-bold uppercase text-sm shrink-0 bg-accent text-on-accent tracking-[0.12em] [--rise-delay:280ms]"
+              data-magnetic
+              data-cursor="cta"
+            >
+              Explore Destinations
+              <svg class="transition-transform duration-300 group-hover:translate-x-1" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Scroll hint with a traverse meter that fills as you scroll -->
+          <div class="hero-rise flex items-center gap-4 mt-10 [--rise-delay:360ms]" aria-hidden="true">
+            <div class="relative w-24 h-px bg-cream/30 overflow-hidden">
+              <!-- Start state via `transform` (not Tailwind's scale-x-0,
+                   which sets the separate `scale` property that the
+                   script's transform would multiply with, never replace). -->
+              <div id="hero-meter" class="absolute inset-0 origin-left [transform:scaleX(0)] bg-[var(--accent-on-dark)]"></div>
+            </div>
+            <p class="coords text-xs text-cream/80">SCROLL TO TRAVERSE</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       STATS BAR
+  ================================================================ -->
+  <StatsBar client:visible={{ rootMargin: '100000px 0px 0px 0px' }} />
+
+  <!-- ================================================================
+       DESTINATIONS TEASER — Pinned horizontal scroll (6 cards)
+  ================================================================ -->
+  <DestinationsTeaser
+    cards={railCards}
+    base={base}
+    client:visible={{ rootMargin: '100000px 0px 100% 0px' }}
+  />
+
+  <!-- ================================================================
+       HOW WE JOURNEY — Sticky left header + numbered steps
+  ================================================================ -->
+  <HowWeJourney />
+
+  <!-- ================================================================
+       FEATURED JOURNEYS — 3 alternating editorial splits
+  ================================================================ -->
+  <FeaturedJourneys
+    journeys={featuredJourneys}
+    images={journeyImages}
+    base={base}
+  />
+
+  <!-- ================================================================
+       TESTIMONIALS — Masonry 3-col
+  ================================================================ -->
+  <Testimonials avatars={avatarImages} />
+
+  <!-- ================================================================
+       PARTNERS MARQUEE
+  ================================================================ -->
+  <PartnersMarquee />
+
+  <!-- ================================================================
+       EXPEDITION CTA — Full-bleed dark photo
+  ================================================================ -->
+  <ExpeditionCTA base={base} image={ctaImage} />
+</BaseLayout>
+
+<!-- ================================================================
+     PANORAMIC HERO SCROLL — one rAF-throttled scroll listener.
+     Every property is derived from a single progress value each frame,
+     so nothing records a start state that a refresh could resurrect.
+================================================================ -->
+<script>
+  const START = { lat: 61.2247, lng: 6.8782 }; // Norwegian fjords
+  const END = { lat: -51.7267, lng: -72.9651 }; // Patagonia
+
+  const formatCoord = (val: number, pos: string, neg: string): string =>
+    `${Math.abs(val).toFixed(4)}° ${val >= 0 ? pos : neg}`;
+
+  function initPanoramicHero(): void {
+    const wrapper = document.getElementById('hero-wrapper');
+    const panPhoto = document.getElementById('pan-photo');
+    if (!wrapper || !panPhoto) return;
+
+    const gpsLat = document.getElementById('gps-lat');
+    const gpsLng = document.getElementById('gps-lng');
+    const dusk = document.getElementById('hero-dusk');
+    const meter = document.getElementById('hero-meter');
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let ticking = false;
+    let lastProgress = -1;
+
+    function update(): void {
+      ticking = false;
+      const maxScroll = wrapper!.offsetHeight - window.innerHeight;
+      const raw = maxScroll > 0 ? -wrapper!.getBoundingClientRect().top / maxScroll : 0;
+      const progress = Math.max(0, Math.min(1, raw));
+      if (progress === lastProgress) return;
+      lastProgress = progress;
+
+      if (!still) panPhoto!.style.transform = `translate3d(${-(progress * 75)}%, 0, 0)`;
+      if (dusk) dusk.style.opacity = progress.toFixed(3);
+      if (meter) meter.style.transform = `scaleX(${progress.toFixed(3)})`;
+      if (gpsLat && gpsLng) {
+        gpsLat.textContent = formatCoord(START.lat + (END.lat - START.lat) * progress, 'N', 'S');
+        gpsLng.textContent = formatCoord(START.lng + (END.lng - START.lng) * progress, 'E', 'W');
+      }
+    }
+
+    function onScroll(): void {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+
+    document.addEventListener(
+      'astro:before-preparation',
+      () => {
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener('astro:page-load', initPanoramicHero);
+</script>

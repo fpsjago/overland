@@ -1,0 +1,12 @@
+{
+  "name": "East African Savanna",
+  "region": "East Africa",
+  "country": "Tanzania / Kenya",
+  "coordinates": { "lat": -2.6527, "lng": 37.2606 },
+  "difficulty": "moderate",
+  "terrain": ["savanna", "crater", "highland forest", "coastal"],
+  "season": "January – March / June – October",
+  "highlights": ["Serengeti migration", "Ngorongoro Crater", "Amboseli plains", "Laikipia conservancy"],
+  "heroImage": "_assets/dest-safari.jpg",
+  "gallery": ["_assets/journey-africa.jpg"]
+}

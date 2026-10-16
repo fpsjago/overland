@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { base } from '../lib/utils';
+import { responsiveImage } from '../lib/images';
+
+const hero = await responsiveImage('_assets/about-hero.jpg', [640, 1024, 1440, 1920]);
+const patagonia = await responsiveImage('_assets/dest-patagonia.jpg', [480, 800]);
+const himalayas = await responsiveImage('_assets/dest-himalayas.jpg', [480, 800]);
+// Two-column figures: full width on phones, half the 896px column above md.
+const figureSizes = '(min-width: 768px) 420px, 100vw';
+---
+
+<BaseLayout
+  title="About — OVERLAND"
+  description="OVERLAND was founded in 2006 to take small groups to the places that demand everything. Our manifesto: precision, humility, and the right guide."
+>
+  <!-- Hero -->
+  <div class="on-dark relative h-[80vh] overflow-hidden">
+    <img
+      src={hero.src}
+      srcset={hero.srcset}
+      sizes="100vw"
+      width={hero.width}
+      height={hero.height}
+      alt="A glaciated mountain range above green valleys"
+      class="absolute inset-0 w-full h-full object-cover"
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+      data-cursor="photo"
+    />
+    <div
+      class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(15,26,11,0.3)_0%,rgba(15,26,11,0.8)_100%)]"
+    />
+    <div class="mapGrid absolute inset-0 pointer-events-none" aria-hidden="true" />
+
+    <div class="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-16 max-w-4xl">
+      <p class="coords text-xs mb-6 text-accent-ink">SINCE 2006 / OUR STORY</p>
+      <h1
+        class="font-heading font-black italic leading-none text-[length:clamp(3rem,7vw,6rem)] text-cream"
+      >
+        The Company
+        <br />
+        We Keep
+      </h1>
+    </div>
+  </div>
+
+  <!-- Manifesto -->
+  <div class="max-w-4xl mx-auto px-6 md:px-12 py-24">
+    <!-- Opening statement -->
+    <div class="mb-20" data-reveal>
+      <p
+        class="font-body italic leading-loose text-[length:clamp(1.25rem,2.5vw,1.75rem)] text-primary max-w-[36ch]"
+      >
+        "We believe the most important thing a travel company can do is get out of the way — and hire guides who know more than you do about the places you're visiting."
+      </p>
+      <div
+        class="w-12 h-px mt-8 bg-accent"
+      />
+    </div>
+
+    <!-- History sections -->
+    <div class="space-y-20">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start" data-reveal="slide-left">
+        <div>
+          <p class="coords text-xs mb-4 text-accent-ink">01 / FOUNDED</p>
+          <h2
+            class="font-heading font-black italic leading-tight mb-6 text-[length:clamp(1.75rem,3.5vw,2.75rem)] text-primary"
+          >
+            Punta Arenas, 2006
+          </h2>
+          <div class="space-y-4 font-body leading-relaxed text-muted">
+            <p>
+              OVERLAND was founded by Elena Vásquez in 2006 after eight years guiding independently in Patagonia. The company started with a single route — the W Trek — and the principle that small groups change everything.
+            </p>
+            <p>
+              With five clients maximum per guide (not eight, not twelve), you stop being a group and start being a team. The guide can pay attention to everyone. The pace adapts. The journey becomes personal.
+            </p>
+          </div>
+        </div>
+        <div class="overflow-hidden rounded aspect-[4/5]" data-cursor="photo">
+          <img
+            src={patagonia.src}
+            srcset={patagonia.srcset}
+            sizes={figureSizes}
+            width={patagonia.width}
+            height={patagonia.height}
+            alt="Patagonia, where OVERLAND began"
+            class="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start" data-reveal="slide-right">
+        <div class="md:order-2">
+          <p class="coords text-xs mb-4 text-accent-ink">02 / EXPANDING</p>
+          <h2
+            class="font-heading font-black italic leading-tight mb-6 text-[length:clamp(1.75rem,3.5vw,2.75rem)] text-primary"
+          >
+            Eighteen Years,
+            <br />
+            Six Continents
+          </h2>
+          <div class="space-y-4 font-body leading-relaxed text-muted">
+            <p>
+              In 2008 we added Iceland. In 2011, East Africa. The Himalayas joined in 2013 when Rajan Thapa — born in Namche Bazaar, Island Peak certified — became our first Himalayan guide.
+            </p>
+            <p>
+              We've never added a destination because it's popular. We add it when we find the guide. The guide comes first. The itinerary follows.
+            </p>
+          </div>
+        </div>
+        <div class="md:order-1 overflow-hidden rounded aspect-[4/5]" data-cursor="photo">
+          <img
+            src={himalayas.src}
+            srcset={himalayas.srcset}
+            sizes={figureSizes}
+            width={himalayas.width}
+            height={himalayas.height}
+            alt="Himalayan expeditions"
+            class="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+
+      <!-- The numbers -->
+      <div
+        class="py-16 px-8 rounded bg-surface border border-hairline"
+        data-reveal
+      >
+        <p class="coords text-xs mb-8 text-center text-accent-ink">BY THE NUMBERS</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { val: '47', label: 'Destinations' },
+            { val: '312', label: 'Expeditions' },
+            { val: '8', label: 'Max Group Size' },
+            { val: '4', label: 'Lead Guides' },
+          ].map(item => (
+            <div>
+              <p
+                class="font-heading font-black italic leading-none mb-2 text-[length:clamp(2.5rem,5vw,4rem)] text-accent-ink"
+              >
+                {item.val}
+              </p>
+              <p class="coords text-xs text-muted">{item.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Values -->
+      <div data-reveal>
+        <p class="coords text-xs mb-8 text-accent-ink">OUR PRINCIPLES</p>
+        <div class="space-y-8">
+          {[
+            {
+              title: 'Guide First',
+              text: 'Every destination starts with finding the right guide — not the right marketing angle. The guide determines the depth of the experience.',
+            },
+            {
+              title: 'Small by Design',
+              text: 'Eight people maximum. Not because of regulations — because of quality. Twelve people cannot move through wilderness the same way eight people can.',
+            },
+            {
+              title: 'Honest Difficulty',
+              text: "We don\u2019t soften ratings. A \u201cchallenging\u201d expedition is genuinely challenging. We prepare you completely, and we tell you the truth about what the terrain asks of you.",
+            },
+            {
+              title: 'Leave Less',
+              text: 'We follow Leave No Trace protocols on every expedition. We work with local conservation organizations at each destination and include a voluntary conservation contribution in every booking.',
+            },
+          ].map((v, i) => (
+            <div class="flex gap-6">
+              <span
+                class="font-heading font-black italic shrink-0 text-[length:2rem] text-hairline leading-[1.2]"
+               
+                aria-hidden="true"
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3 class="font-heading font-bold mb-2 text-primary text-[length:1.125rem]">
+                  {v.title}
+                </h3>
+                <p class="font-body leading-relaxed text-muted">
+                  {v.text}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="py-20 px-6 text-center border-t border-hairline">
+    <p class="font-body italic mb-8 max-w-xl mx-auto text-muted text-[length:1.0625rem]">
+      Ready to plan your expedition?
+    </p>
+    <a
+      href={`${base}contact/`}
+      class="inline-flex items-center gap-3 px-8 py-4 font-heading font-bold uppercase text-sm bg-accent text-on-accent tracking-[0.12em]"
+     
+      data-magnetic
+    >
+      Start the Conversation
+    </a>
+  </div>
+</BaseLayout>

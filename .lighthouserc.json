@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/GoogleChrome/lighthouse-ci/main/docs/configuration.md",
+  "ci": {
+    "collect": {
+      "staticDistDir": "./dist",
+      "_comment": "Lighthouse CI serves staticDistDir at the web root, so these URLs assume `base` has been removed from astro.config.mjs (the normal production setup). Keep the demo's base: '/overland' and every URL below 404s.",
+      "url": [
+        "http://localhost/index.html",
+        "http://localhost/destinations/index.html",
+        "http://localhost/journeys/index.html",
+        "http://localhost/about/index.html",
+        "http://localhost/guides/index.html",
+        "http://localhost/blog/index.html",
+        "http://localhost/contact/index.html",
+        "http://localhost/faq/index.html"
+      ],
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", { "minScore": 0.95 }],
+        "categories:accessibility": ["error", { "minScore": 0.95 }],
+        "categories:best-practices": ["error", { "minScore": 0.95 }],
+        "categories:seo": ["error", { "minScore": 0.95 }]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": "./.lighthouseci"
+    }
+  }
+}

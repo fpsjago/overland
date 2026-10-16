@@ -1,0 +1,47 @@
+{
+  "slug": "east-africa-overland",
+  "title": "East Africa Overland",
+  "destination": "East African Savanna",
+  "durationDays": 16,
+  "price": 4200,
+  "difficulty": "moderate",
+  "heroImage": "_assets/journey-africa.jpg",
+  "excerpt": "Sixteen days from Nairobi to Zanzibar — crossing the Masai Mara, Serengeti, Ngorongoro, and coastal forest.",
+  "itinerary": [
+    { "day": 1, "title": "Nairobi Arrival", "description": "Giraffe Centre at dusk. Team dinner in Karen, the leafy suburb named for Blixen." },
+    { "day": 2, "title": "Masai Mara — Arrival", "description": "Fly west to the Mara. Evening game drive. The density of wildlife here requires recalibration." },
+    { "day": 3, "title": "Masai Mara — Full Day", "description": "Dawn balloon optional. The Big Five possible before 9am. Masai guide leads afternoon bush walk." },
+    { "day": 4, "title": "Masai Village + Transit", "description": "Masai boma visit. Crossing into Tanzania at Isebania." },
+    { "day": 5, "title": "Serengeti — Western Corridor", "description": "The wildebeest corridor. Migration timing can mean witnessing thousands of animals moving as one." },
+    { "day": 6, "title": "Serengeti — Central Plains", "description": "The classic savanna image. Flat-topped acacia, lion on termite mound, the horizon just sky." },
+    { "day": 7, "title": "Ngorongoro Crater Rim", "description": "Camp on the crater rim at 2,400m. Cloud forest. Stars through the forest canopy." },
+    { "day": 8, "title": "Ngorongoro Descent", "description": "600m descent into the crater floor. Highest wildlife density on earth within a contained area." },
+    { "day": 9, "title": "Olduvai Gorge + Tarangire", "description": "The birthplace of humanity. Then elephant country — Tarangire's enormous herds around the river." },
+    { "day": 10, "title": "Lake Manyara", "description": "Flamingo-pink shores. Tree-climbing lions in the fever acacias." },
+    { "day": 11, "title": "Mount Kilimanjaro View Day", "description": "Amboseli for the classic Kilimanjaro + elephant composition. The mountain that earns its own section of sky." },
+    { "day": 12, "title": "Coast Drive to Dar es Salaam", "description": "Transition from savanna to coast. Indian Ocean first glimpsed from the escarpment edge." },
+    { "day": 13, "title": "Zanzibar — Stone Town", "description": "Ferry to the island. Spice market, coral stone labyrinth, rooftop sunset over the dhow harbor." },
+    { "day": 14, "title": "Zanzibar — North Coast", "description": "Nungwi beach. Snorkel the reef. Dhow sailing at sunset. Seafood straight from the catch." },
+    { "day": 15, "title": "Jozani Forest", "description": "Red colobus monkeys — endemic to Zanzibar. Mangrove boardwalk. Final inland journey." },
+    { "day": 16, "title": "Departure", "description": "Flights from Zanzibar direct. Expedition closed." }
+  ],
+  "included": [
+    "OVERLAND guide + local Masai and Chagga specialists",
+    "All accommodation (lodges and luxury tented camps)",
+    "All meals",
+    "Private safari 4WD (Land Cruiser) full route",
+    "All park and conservation fees",
+    "Domestic flights Nairobi–Mara, Zanzibar–home airport",
+    "Ferry Dar–Zanzibar"
+  ],
+  "gear": [
+    "Neutral-tone clothing (khaki, olive, tan — bright colors disturb wildlife)",
+    "Binoculars (10×42 recommended)",
+    "Long sleeve sun protection",
+    "Wide-brim hat",
+    "Insect repellent with DEET",
+    "Malaria prophylaxis (consult physician 4 weeks before)",
+    "Camera with long zoom (wildlife distances)",
+    "Lightweight daypack"
+  ]
+}

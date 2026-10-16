@@ -1,0 +1,12 @@
+{
+  "name": "Iceland",
+  "region": "North Atlantic",
+  "country": "Iceland",
+  "coordinates": { "lat": 64.9631, "lng": -19.0208 },
+  "difficulty": "moderate",
+  "terrain": ["glaciers", "lava fields", "geothermal", "highlands"],
+  "season": "June – September",
+  "highlights": ["Vatnajökull Glacier", "Laugavegur Trail", "Westfjords", "Landmannalaugar"],
+  "heroImage": "_assets/dest-iceland.jpg",
+  "gallery": ["_assets/journey-arctic.jpg"]
+}

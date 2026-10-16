@@ -1,0 +1,42 @@
+{
+  "slug": "iceland-traverse",
+  "title": "Iceland Highland Traverse",
+  "destination": "Iceland",
+  "durationDays": 12,
+  "price": 3600,
+  "difficulty": "moderate",
+  "heroImage": "_assets/journey-arctic.jpg",
+  "excerpt": "Twelve days crossing Iceland's volcanic interior — Laugavegur, Landmannalaugar, and the Westfjords coastline.",
+  "itinerary": [
+    { "day": 1, "title": "Reykjavik Arrival", "description": "Evening briefing at the base. Kit inspection and cultural orientation. First taste of skyr and fermented shark." },
+    { "day": 2, "title": "Landmannalaugar", "description": "The obsidian and rhyolite highlands. Multicolored mountains — impossible greens and burnt oranges side by side." },
+    { "day": 3, "title": "Laugavegur Day 1 — Hrafntinnusker", "description": "Through fumaroles and snow fields. Steaming vents melt channels in the snowpack. Ice caves nearby." },
+    { "day": 4, "title": "Laugavegur Day 2 — Álftavatn", "description": "Descent to the alpine lake. Geese nesting. Wind from the east. The silence that only uninhabited land has." },
+    { "day": 5, "title": "Laugavegur Day 3 — Emstrur", "description": "Crossing the Bláfjallakvísl glacier river. Cold. Fast. Unforgettable. Lunar landscape of Emstrur." },
+    { "day": 6, "title": "Þórsmörk", "description": "Valley of the gods. Hidden from the rest of Iceland by three glaciers. Rare vegetation in a protected microclimate." },
+    { "day": 7, "title": "Rest Day / Vatnajökull", "description": "Drive to Europe's largest glacier. Ice caving in electric blue chambers. Glacier walking above the void." },
+    { "day": 8, "title": "East Fjords Drive", "description": "Dramatic coastal cliffs. Fishing villages. Puffin colonies at the cliff edge." },
+    { "day": 9, "title": "Snæfellsjökull", "description": "Jules Verne's gateway to the center of the earth. Crater hike on the volcanic summit." },
+    { "day": 10, "title": "Westfjords — Dynjandi", "description": "The cascade of waterfalls that few visitors reach. Seven tiers, widening as they fall." },
+    { "day": 11, "title": "Westfjords Coast", "description": "Remote peninsula hiking. Arctic fox territory. Sea cliffs above the Denmark Strait." },
+    { "day": 12, "title": "Return to Reykjavik", "description": "Debrief, photographs, farewells." }
+  ],
+  "included": [
+    "OVERLAND certified guide for all 12 days",
+    "All accommodation (mix of huts and tents)",
+    "All meals from arrival dinner through departure breakfast",
+    "Transport throughout Iceland",
+    "Park fees and hut fees",
+    "Emergency PLB device"
+  ],
+  "gear": [
+    "4-season sleeping bag",
+    "Waterproof hiking boots",
+    "Gaiters (mandatory — river crossings)",
+    "Trekking poles",
+    "Wind and rain shell",
+    "Warm midlayer (temperatures drop fast)",
+    "Neoprene gloves for river crossings",
+    "Buff / balaclava"
+  ]
+}

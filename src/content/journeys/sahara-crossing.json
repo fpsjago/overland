@@ -1,0 +1,44 @@
+{
+  "slug": "sahara-crossing",
+  "title": "Sahara Grand Crossing",
+  "destination": "Sahara",
+  "durationDays": 14,
+  "price": 3200,
+  "difficulty": "challenging",
+  "heroImage": "_assets/journey-desert.jpg",
+  "excerpt": "Fourteen days by camel, 4WD, and foot through Morocco's great desert — dunes, canyon, oasis, and stars that own the night.",
+  "itinerary": [
+    { "day": 1, "title": "Marrakech Arrival", "description": "Medina walk, evening brief in the riad. Mint tea, lantern light, the call to prayer from every direction." },
+    { "day": 2, "title": "Atlas Mountains Crossing", "description": "Over the Tizi n'Tichka pass. Berber villages clinging to cliffsides. The desert begins on the south side." },
+    { "day": 3, "title": "Draa Valley", "description": "300km of palm oasis following the river south. Fortified kasbahs every few kilometers." },
+    { "day": 4, "title": "Zagora — Edge of the Erg", "description": "The last town before the dunes. Camel market in the morning. Departure into the desert after lunch." },
+    { "day": 5, "title": "Into the Erg Chegaga", "description": "Five hours by camel. Silence falls once the last road disappears behind the first dune crest." },
+    { "day": 6, "title": "Deep Desert Camp", "description": "No tracks, no structures, no horizon features — just dune geometry in every direction. Starfield begins at dusk." },
+    { "day": 7, "title": "Sunrise Dune Summit", "description": "4am departure on foot. The dune summit at first light — cold wind, orange sky, shadow geometry." },
+    { "day": 8, "title": "Hammada — Stone Desert", "description": "The other Sahara. Flat black gravel plain, wind-carved rocks, fossilized sea creatures in the limestone." },
+    { "day": 9, "title": "Oasis Rest Day", "description": "Hidden freshwater spring. Date palms. Traditional Gnawa music in the evening. Full rest." },
+    { "day": 10, "title": "Todra Gorge", "description": "300m vertical walls pressing in from both sides. Rock climbers on the walls. Trout in the stream." },
+    { "day": 11, "title": "Dades Valley", "description": "The Road of a Thousand Kasbahs. Dramatic switchbacks above the valley floor." },
+    { "day": 12, "title": "Erg Chebbi — Merzouga", "description": "The most famous dunes. Sunset colors that no photograph has ever fully captured." },
+    { "day": 13, "title": "Northern Return — Fes", "description": "Cross-country to Fes. The world's oldest university. Tanneries seen from the leather merchants' terraces." },
+    { "day": 14, "title": "Marrakech Return", "description": "Final debrief. Souk farewell. Return flights or onward travel." }
+  ],
+  "included": [
+    "OVERLAND guide + Tuareg desert specialist",
+    "All accommodation (riads in cities, desert camps under stars)",
+    "All meals",
+    "Private 4WD vehicle for overland sections",
+    "Camel trekking with handler",
+    "Park and site entry fees"
+  ],
+  "gear": [
+    "Lightweight sun protection (long sleeves, hat with neck flap)",
+    "Dust goggles or sunglasses (sand can be intense)",
+    "Merino layers — desert nights are cold",
+    "High-SPF sunscreen",
+    "Personal water bottles (2L minimum)",
+    "Headlamp",
+    "Sturdy sandals or light hiking shoes",
+    "Small daypack"
+  ]
+}

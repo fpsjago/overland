@@ -1,0 +1,157 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { base, formatDate } from '../../lib/utils';
+import { responsiveImage } from '../../lib/images';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+const featured = posts[0];
+const rest = posts.slice(1);
+
+const images = Object.fromEntries(
+  await Promise.all(posts.map(async (p) => [p.id, await responsiveImage(p.data.heroImage, [400, 640, 800])] as const)),
+);
+const cardSizes = '(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw';
+---
+
+<BaseLayout
+  title="Field Reports — OVERLAND"
+  description="Expedition dispatches from the field. Guides, clients, and the places that define us."
+>
+  <!-- Header -->
+  <header class="pt-40 pb-16 px-6 md:px-12 bg-panel">
+    <div class="max-w-6xl mx-auto">
+      <p class="coords text-xs mb-6 text-accent-ink">FIELD REPORTS / DISPATCHES</p>
+      <h1
+        class="font-heading font-black italic leading-none text-[length:clamp(3rem,8vw,7rem)] text-cream"
+      >
+        From the Field
+      </h1>
+    </div>
+  </header>
+
+  <div class="max-w-6xl mx-auto px-6 md:px-12 py-20">
+    <!-- Featured article — broadsheet lead -->
+    {featured && (
+      <a
+        href={`${base}blog/${featured.id}/`}
+        class="group block mb-20 pb-20 border-b border-hairline"
+       
+        data-reveal
+      >
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+          <div
+            class="overflow-hidden rounded aspect-[16/9]"
+           
+            data-cursor="photo"
+          >
+            <img
+              src={images[featured.id]?.src}
+              srcset={images[featured.id]?.srcset}
+              sizes="(min-width: 1024px) 560px, 100vw"
+              alt={featured.data.title}
+              width={images[featured.id]?.width}
+              height={images[featured.id]?.height}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div class="flex flex-col justify-center">
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+              {featured.data.tags.slice(0, 2).map(tag => (
+                <span
+                  class="font-heading font-bold uppercase text-xs px-3 py-1 bg-accent text-on-accent tracking-[0.1em]"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <h2
+              class="font-heading font-black italic leading-tight mb-4 text-[length:clamp(1.75rem,4vw,3rem)] text-primary"
+            >
+              {featured.data.title}
+            </h2>
+            <p class="font-body leading-relaxed mb-6 text-muted">
+              {featured.data.excerpt}
+            </p>
+            <div class="flex items-center gap-4">
+              <span class="font-heading font-bold text-sm text-primary">
+                {featured.data.author}
+              </span>
+              <span class="text-hairline">·</span>
+              <span class="coords text-xs text-muted">
+                {formatDate(featured.data.pubDate)}
+              </span>
+              <span class="text-hairline">·</span>
+              <span class="coords text-xs text-muted">
+                {typeof featured.data.readTime === 'string' ? featured.data.readTime : `${featured.data.readTime} min read`}
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+    )}
+
+    <!-- Article grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {rest.map((post) => (
+        <a
+          href={`${base}blog/${post.id}/`}
+          class="group block"
+          data-reveal="scale"
+        >
+          <div
+            class="overflow-hidden rounded mb-5 aspect-[16/9]"
+           
+            data-cursor="photo"
+          >
+            <img
+              src={images[post.id]?.src}
+              srcset={images[post.id]?.srcset}
+              sizes={cardSizes}
+              alt={post.data.title}
+              width={images[post.id]?.width}
+              height={images[post.id]?.height}
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-3">
+            {post.data.tags.slice(0, 1).map(tag => (
+              <span
+                class="font-heading font-bold uppercase text-xs px-2 py-1 border border-hairline text-muted tracking-[0.08em]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <h2
+            class="font-heading font-black italic leading-tight mb-3 text-[length:1.375rem] text-primary"
+          >
+            {post.data.title}
+          </h2>
+          <p class="font-body text-sm leading-relaxed mb-4 text-muted">
+            {post.data.excerpt}
+          </p>
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-heading font-bold text-primary">
+              {post.data.author}
+            </span>
+            <span class="text-hairline">·</span>
+            <span class="coords text-xs text-muted">
+              {formatDate(post.data.pubDate)}
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

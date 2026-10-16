@@ -1,0 +1,12 @@
+{
+  "name": "Norwegian Fjords",
+  "region": "Scandinavia",
+  "country": "Norway",
+  "coordinates": { "lat": 61.2247, "lng": 6.8782 },
+  "difficulty": "moderate",
+  "terrain": ["fjords", "glaciers", "plateaus", "coastal cliffs"],
+  "season": "May – October",
+  "highlights": ["Nærøyfjord kayaking", "Trolltunga hike", "Jostedalsbreen Glacier", "Preikestolen"],
+  "heroImage": "_assets/dest-norway.jpg",
+  "gallery": ["_assets/journey-norway.jpg"]
+}

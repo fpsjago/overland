@@ -1,0 +1,12 @@
+{
+  "name": "Sahara",
+  "region": "North Africa",
+  "country": "Morocco / Algeria",
+  "coordinates": { "lat": 23.4162, "lng": 25.6628 },
+  "difficulty": "challenging",
+  "terrain": ["erg dunes", "hammada", "oasis", "canyon"],
+  "season": "October – April",
+  "highlights": ["Erg Chebbi dunes", "Draa Valley", "Todra Gorge", "Saharan starfields"],
+  "heroImage": "_assets/dest-sahara.jpg",
+  "gallery": ["_assets/journey-desert.jpg"]
+}

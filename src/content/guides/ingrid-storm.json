@@ -1,0 +1,9 @@
+{
+  "slug": "ingrid-storm",
+  "name": "Ingrid Storm",
+  "role": "Lead Expedition Guide — Arctic & Nordic",
+  "bio": "Ingrid was born in Tromsø and has spent her career in the high latitudes. She has crossed Greenland on skis twice, guided Iceland's Laugavegur over 60 times, and coordinated logistics for research expeditions in Svalbard. Her calm authority in whiteout conditions has earned the trust of everyone who has followed her rope.",
+  "expeditions": ["Iceland Highland Traverse", "Norwegian Fjords Winter", "Greenland Ice Sheet"],
+  "image": "_assets/guide-3.jpg",
+  "specialties": ["Arctic survival", "Sea kayaking", "Ski touring", "Norwegian / English / Icelandic"]
+}

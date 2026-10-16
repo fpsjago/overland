@@ -1,0 +1,9 @@
+{
+  "slug": "marcus-osei",
+  "name": "Marcus Osei",
+  "role": "Lead Expedition Guide — East Africa",
+  "bio": "Marcus grew up watching wildlife from his family's farm on the edge of the Masai Mara. He trained as a wildlife biologist before becoming a guide, and that scientific foundation shows — he reads a landscape the way others read a map. Twelve years of professional guiding across Tanzania, Kenya, Uganda, and Ethiopia. He speaks six languages including Swahili, Maa, and Kikuyu.",
+  "expeditions": ["East Africa Overland", "Rwenzori Mountains", "Ethiopian Highlands"],
+  "image": "_assets/guide-2.jpg",
+  "specialties": ["Wildlife tracking and behavior", "African ecology", "Six languages", "Cultural liaison"]
+}

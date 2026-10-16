@@ -1,0 +1,12 @@
+{
+  "name": "Alaska Range",
+  "region": "North America",
+  "country": "USA",
+  "coordinates": { "lat": 63.0695, "lng": -151.0074 },
+  "difficulty": "extreme",
+  "terrain": ["tundra", "glaciers", "boreal forest", "alpine"],
+  "season": "June – August",
+  "highlights": ["Denali backcountry", "Wrangell-St. Elias traverse", "Kenai Fjords sea kayak", "Brooks Range"],
+  "heroImage": "_assets/dest-alaska.jpg",
+  "gallery": ["_assets/journey-alaska.jpg"]
+}

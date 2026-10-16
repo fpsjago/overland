@@ -1,0 +1,148 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { base, formatDate } from '../../lib/utils';
+import { responsiveImage, socialImage } from '../../lib/images';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const hero = await responsiveImage(d.heroImage, [640, 1024, 1200]);
+const ogImage = await socialImage(d.heroImage);
+---
+
+<BaseLayout
+  title={`${d.title} — OVERLAND Field Reports`}
+  description={d.excerpt}
+  image={ogImage}
+>
+  <!-- Article hero -->
+  <div class="on-dark relative h-[70vh] overflow-hidden">
+    <img
+      src={hero.src}
+      srcset={hero.srcset}
+      sizes="100vw"
+      width={hero.width}
+      height={hero.height}
+      alt={d.title}
+      class="absolute inset-0 w-full h-full object-cover"
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+      data-cursor="photo"
+    />
+    <div
+      class="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(15,26,11,0.2)_0%,rgba(15,26,11,0.85)_100%)]"
+    />
+
+    <div class="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-16">
+      <div class="max-w-3xl">
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          {d.tags.map(tag => (
+            <span
+              class="font-heading font-bold uppercase text-xs px-3 py-1 bg-accent text-on-accent tracking-[0.1em]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <h1
+          class="font-heading font-black italic leading-tight mb-6 text-[length:clamp(2rem,5vw,4rem)] text-cream"
+        >
+          {d.title}
+        </h1>
+        <div class="flex flex-wrap items-center gap-4">
+          <span class="font-heading font-bold text-sm text-cream/80">
+            {d.author}
+          </span>
+          <span class="text-cream/70">·</span>
+          <span class="coords text-xs text-cream/70">
+            {formatDate(d.pubDate)}
+          </span>
+          <span class="text-cream/70">·</span>
+          <span class="coords text-xs text-cream/70">
+            {d.readTime}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article body -->
+  <div class="max-w-3xl mx-auto px-6 md:px-12 py-20">
+    <div
+      class="font-body prose-overland text-ink text-[length:1.0625rem] leading-[1.8]"
+    >
+      <Content />
+    </div>
+
+    <!-- Back link -->
+    <div class="mt-16 pt-8 border-t border-hairline">
+      <a
+        href={`${base}blog/`}
+        class="inline-flex items-center gap-2 font-heading font-bold uppercase text-sm text-accent-ink tracking-[0.12em]"
+      >
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Field Reports
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .prose-overland h2 {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--primary);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .prose-overland p {
+    margin-bottom: 1.5rem;
+  }
+  .prose-overland ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+  }
+  .prose-overland ul li::before {
+    content: '— ';
+    color: var(--accent);
+  }
+  .prose-overland strong {
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .prose-overland em {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .prose-overland hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+  /* Pull quote set like a field-notebook entry: hairline rules above and
+     below, larger italic, full ink. */
+  .prose-overland blockquote {
+    border-block: 1px solid var(--border);
+    padding: 1.25rem 0;
+    margin: 2.5rem 0;
+    color: var(--text);
+    font-size: 1.15em;
+    font-style: italic;
+  }
+</style>
