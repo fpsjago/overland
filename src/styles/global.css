@@ -590,13 +590,22 @@
   }
 
   /* --- FAQ accordion ---
-     The open/closed height is measured at runtime (scrollHeight), so the
-     script sets max-height imperatively; the closed state and the easing
-     belong here. */
+     State lives on the trigger (aria-expanded). The body is a one-row grid that
+     animates 0fr -> 1fr, so no height is measured in script. Closed answers are
+     visibility:hidden, which also takes them out of the tab and reading order. */
   .accordion-body {
-    max-height: 0;
-    transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0s linear 0.4s;
   }
+  .accordion-inner { min-height: 0; overflow: hidden; }
+  .accordion-trigger[aria-expanded='true'] + .accordion-body {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0s linear 0s;
+  }
+  .accordion-trigger[aria-expanded='true'] .accordion-icon { transform: rotate(45deg); }
   .accordion-icon {
     color: var(--accent);
     font-size: 1.25rem;

@@ -115,12 +115,14 @@ import { base } from '../lib/utils';
                   +
                 </span>
               </button>
-              <div class="accordion-body overflow-hidden">
-                <p
-                  class="font-body leading-relaxed pb-6 pr-12 text-muted"
-                >
-                  {item.a}
-                </p>
+              <div class="accordion-body">
+                <div class="accordion-inner">
+                  <p
+                    class="font-body leading-relaxed pb-6 pr-12 text-muted"
+                  >
+                    {item.a}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
@@ -151,36 +153,18 @@ import { base } from '../lib/utils';
 </BaseLayout>
 
 <script>
+  // Open/close is pure state: aria-expanded on the trigger. CSS animates the row height
+  // (grid-template-rows 0fr -> 1fr) and the icon, so nothing here measures layout.
   function initAccordions() {
-    document.querySelectorAll('.accordion-trigger').forEach((trigger) => {
+    document.querySelectorAll<HTMLButtonElement>('.accordion-trigger').forEach((trigger) => {
       trigger.addEventListener('click', () => {
-        const item = trigger.closest('.accordion-item') as HTMLElement;
-        const body = item.querySelector('.accordion-body') as HTMLElement;
-        const icon = trigger.querySelector('.accordion-icon') as HTMLElement;
+        const item = trigger.closest('.accordion-item');
         const isOpen = trigger.getAttribute('aria-expanded') === 'true';
-
-        // Close all in same group
-        const group = item.closest('.accordion-group');
-        group?.querySelectorAll('.accordion-item').forEach((sib) => {
-          if (sib !== item) {
-            const sibBody = sib.querySelector('.accordion-body') as HTMLElement;
-            const sibTrigger = sib.querySelector('.accordion-trigger') as HTMLElement;
-            const sibIcon = sib.querySelector('.accordion-icon') as HTMLElement;
-            sibBody.style.maxHeight = '0';
-            sibTrigger.setAttribute('aria-expanded', 'false');
-            if (sibIcon) sibIcon.style.transform = 'rotate(0deg)';
-          }
+        // one open per group
+        item?.closest('.accordion-group')?.querySelectorAll('.accordion-trigger').forEach((t) => {
+          if (t !== trigger) t.setAttribute('aria-expanded', 'false');
         });
-
-        if (isOpen) {
-          body.style.maxHeight = '0';
-          trigger.setAttribute('aria-expanded', 'false');
-          if (icon) icon.style.transform = 'rotate(0deg)';
-        } else {
-          body.style.maxHeight = body.scrollHeight + 'px';
-          trigger.setAttribute('aria-expanded', 'true');
-          if (icon) icon.style.transform = 'rotate(45deg)';
-        }
+        trigger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
       });
     });
   }
