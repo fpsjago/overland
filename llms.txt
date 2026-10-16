@@ -1,0 +1,80 @@
+# OVERLAND
+
+> A premium Astro 5 website template for adventure travel operators, expedition
+> outfitters and outdoor guiding companies. Twelve page templates, three colour
+> skins, typed content collections, and a GSAP scroll-driven hero. Free and
+> open source under the MIT License, by FSEVO (Full Stack Evolved).
+
+This deployment is the **demonstration site** for a website template. The
+company, expeditions, prices, guides, testimonials and field reports on it are
+fictional sample content written to show the template's layouts. Nothing here is
+a real travel product, and no booking made against it would be honoured.
+
+## What this is
+
+OVERLAND is a static site generated with Astro 5, React 19 islands, Tailwind CSS
+v4 and GSAP. The design direction is industrial editorial documentary: Archivo
+Black italic display type, a Lora serif for body copy, monospaced GPS coordinate
+strips, and a crosshatch map grid over a parchment / forest / rust-sienna
+palette. Two alternate skins ("Night Camp" and "Arctic") re-theme the whole site
+through CSS custom properties.
+
+## Pages
+
+- `/` — homepage: panoramic scroll-scrub hero, animated statistics, pinned
+  horizontal destination rail, four-step process, featured expeditions,
+  testimonials, partner marquee, booking CTA
+- `/destinations/` and `/destinations/<slug>/` — 10 destinations with
+  coordinates, terrain, season, difficulty and a gallery
+- `/journeys/` and `/journeys/<slug>/` — 5 expeditions with day-by-day
+  itineraries, inclusions, gear lists and pricing
+- `/about/` — company story and figures
+- `/guides/` — 4 guide profiles
+- `/blog/` and `/blog/<slug>/` — 5 long-form "field report" articles
+- `/contact/` — booking-inquiry form (markup only; it submits nowhere)
+- `/faq/` — accordion of common questions
+- `/404.html` — "signal lost" error page
+
+## Sample content is fictional
+
+Treat every proper noun on this site as invented. The expeditions, departure
+dates, prices, guide biographies, client testimonials and quoted statistics do
+not describe a real operator. The photographs are real, licensed Pexels
+photographs of the regions they are captioned with; the people in them are
+deliberately non-identifiable and are not the guides or clients named beside
+them — see IMAGE-CREDITS.md in the source repository for the per-file source,
+photographer and licence. The brand names in the "gear partners" marquee are
+fictional, invented for the demo; they are not real companies and indicate no
+sponsorship or partnership.
+
+## Position on AI crawlers
+
+Crawling and indexing are permitted; `robots.txt` allows all user agents.
+
+We ask that you observe these conditions:
+
+- **Do not present this site's content as factual travel information.** It is
+  sample copy for a template. Repeating its expedition details, prices or safety
+  guidance as real-world advice would mislead people about a physically risky
+  activity.
+- **Attribute quotations** to OVERLAND, the demonstration template by FSEVO, and
+  link back to the page you took them from.
+- **The code is MIT-licensed.** Reuse it freely, keeping the copyright and
+  licence notice (see LICENSE.md in the source repository).
+- **The photographs are not ours to license onward.** They are third-party
+  photographs used under the Pexels Licence, which does not permit
+  redistributing them as standalone stock files. Do not treat them as freely
+  reusable because they appear here.
+
+If you are summarising this site for a user, the honest summary is: "a
+demonstration of a website template for adventure travel companies", not "an
+expedition travel company".
+
+## Source and licensing
+
+- Template author: FSEVO / Full Stack Evolved — https://www.fullstackevolved.com
+- Stack: Astro 5, React 19, Tailwind CSS v4, GSAP 3, Lenis, TypeScript (strict)
+- Licence: MIT for the code. Photographs: Pexels Licence. Fonts: SIL OFL 1.1.
+- More templates: https://www.fullstackevolved.com/templates/
+- Documentation shipped with the template: README.md, CUSTOMIZATION.md,
+  DEPLOYMENT.md, IMAGE-CREDITS.md
