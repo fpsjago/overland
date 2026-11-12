@@ -1,14 +1,12 @@
 /* OVERLAND — Content Collection Schemas
    All Zod schemas for the 4 content collections.
-   destinations / journeys / guides → type: 'data' (JSON files)
-   blog → Astro 5 `glob()` loader (Markdown files).
-
-   The blog MUST use the loader: the legacy `type: 'content'` API keeps the
-   file extension in `entry.id`, which leaked straight into the published
-   URLs (/blog/gear-philosophy.md/). `glob()` strips it.
+   Every collection uses the `glob()` loader: JSON files for destinations /
+   journeys / guides, Markdown for the blog. `entry.id` is the file name
+   without its extension, and it is the URL slug.
    ============================================================ */
 
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 // ============================================================
@@ -16,7 +14,7 @@ import { glob } from 'astro/loaders';
 // Physical locations: coordinates, terrain, difficulty
 // ============================================================
 const destinations = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/destinations' }),
   schema: z.object({
     name: z.string(),
     region: z.string(),
@@ -39,7 +37,7 @@ const destinations = defineCollection({
 // Packaged expeditions: itinerary, pricing, gear lists
 // ============================================================
 const journeys = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/journeys' }),
   schema: z.object({
     title: z.string(),
     destination: z.string(),
@@ -83,7 +81,7 @@ const blog = defineCollection({
 // Certified expedition guides: bio, specialties, expeditions
 // ============================================================
 const guides = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/guides' }),
   schema: z.object({
     name: z.string(),
     role: z.string(),
