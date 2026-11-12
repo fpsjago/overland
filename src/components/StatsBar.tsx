@@ -78,6 +78,7 @@ export function StatsBar() {
             </div>
           ))}
         </dl>
+        <p className="coords text-xs text-center mt-10 text-accent-ink">Demo figures</p>
       </div>
     </section>
   );

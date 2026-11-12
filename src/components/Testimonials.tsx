@@ -54,7 +54,7 @@ export function Testimonials({ avatars }: TestimonialsProps) {
     <section className="py-32 bg-surface">
       <div className="max-w-6xl mx-auto px-6">
         <div className="mb-16">
-          <p className="coords text-xs mb-4 text-accent-ink">FIELD REPORTS / CLIENT VOICES</p>
+          <p className="coords text-xs mb-4 text-accent-ink">FIELD REPORTS / CLIENT VOICES · DEMO CONTENT</p>
           <h2
             className="font-heading font-black italic leading-none text-primary text-[length:clamp(2.5rem,5vw,4rem)]"
             data-reveal
